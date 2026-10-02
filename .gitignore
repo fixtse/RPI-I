@@ -4,6 +4,7 @@
 **/sdkconfig.old
 **/managed_components/
 **/.espressif/
+**/.cache/
 
 # Compiled firmware and generated maps
 *.bin

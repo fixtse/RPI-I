@@ -18,8 +18,8 @@ static void task_a(void *pvParameters)
     (void)pvParameters;
 
     for (int i = 1; i <= 10; ++i) {
-        printf("Tarea A: mensaje %d (cada 500 ms)\n", i);
-        vTaskDelay(pdMS_TO_TICKS(500));
+        printf("Tarea A: mensaje %d (cada %d ms)\n", i, CONFIG_TASK_A_DELAY_MS);
+        vTaskDelay(pdMS_TO_TICKS(CONFIG_TASK_A_DELAY_MS));
     }
 
     vTaskDelete(NULL);
@@ -30,8 +30,8 @@ static void task_b(void *pvParameters)
     (void)pvParameters;
 
     for (int i = 1; i <= 6; ++i) {
-        printf("Tarea B: mensaje %d (cada 1200 ms)\n", i);
-        vTaskDelay(pdMS_TO_TICKS(1200));
+        printf("Tarea B: mensaje %d (cada %d ms)\n", i, CONFIG_TASK_B_DELAY_MS);
+        vTaskDelay(pdMS_TO_TICKS(CONFIG_TASK_B_DELAY_MS));
     }
 
     vTaskDelete(NULL);

@@ -9,7 +9,7 @@
   "idf.extensionActivationMode": "always",
   "idf.currentSetup": "/opt/esp/idf",
   "idf.openOcdConfigs": [
-    "board/esp32c3-builtin.cfg"
+    "board/esp32-wrover-kit-3.3v.cfg"
   ],
   "clangd.path": "/opt/esp/tools/esp-clangd/esp-21.1.3_20260408/esp-clangd/bin/clangd",
   "clangd.arguments": [

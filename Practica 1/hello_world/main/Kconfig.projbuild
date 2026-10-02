@@ -1,0 +1,17 @@
+menu "Hello World Configuration"
+
+config TASK_A_DELAY_MS
+	int "Tiempo de espera de la tarea A (ms)"
+	range 1 60000
+	default 500
+	help
+		Intervalo en milisegundos entre los mensajes de la tarea A.
+
+config TASK_B_DELAY_MS
+	int "Tiempo de espera de la tarea B (ms)"
+	range 1 60000
+	default 1200
+	help
+		Intervalo en milisegundos entre los mensajes de la tarea B.
+
+endmenu

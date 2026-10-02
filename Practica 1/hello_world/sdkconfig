@@ -730,6 +730,13 @@ CONFIG_PARTITION_TABLE_MD5=y
 # end of Partition Table
 
 #
+# Hello World Configuration
+#
+CONFIG_TASK_A_DELAY_MS=600
+CONFIG_TASK_B_DELAY_MS=1800
+# end of Hello World Configuration
+
+#
 # Compiler options
 #
 # default:
