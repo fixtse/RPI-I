@@ -1,0 +1,22 @@
+# ESP-IDF build output
+**/build/
+**/sdkconfig
+**/sdkconfig.old
+**/managed_components/
+**/.espressif/
+
+# Compiled firmware and generated maps
+*.bin
+*.elf
+*.map
+
+# CMake output
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+install_manifest.txt
+CTestTestfile.cmake
+
+# Python caches created by ESP-IDF tools
+__pycache__/
+*.py[cod]
