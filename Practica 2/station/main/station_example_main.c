@@ -73,8 +73,18 @@ static int s_retry_num = 0;
 static void event_handler(void* arg, esp_event_base_t event_base,
                                 int32_t event_id, void* event_data)
 {
-    if (event_base == WIFI_EVENT && event_id == WIFI_EVENT_STA_START) {
+    if (event_base == WIFI_EVENT && event_id == WIFI_EVENT_SCAN_DONE) {
+        /* Aquí se podrían consultar los AP encontrados y liberar sus registros. */
+        ESP_LOGI(TAG, "WiFi scan finished");
+    } else if (event_base == WIFI_EVENT && event_id == WIFI_EVENT_STA_START) {
+        /* La interfaz ya está lista para iniciar la conexión. */
         esp_wifi_connect();
+    } else if (event_base == WIFI_EVENT && event_id == WIFI_EVENT_STA_STOP) {
+        /* Se podrían cerrar sockets y liberar recursos de red de la aplicación. */
+        ESP_LOGI(TAG, "WiFi station stopped");
+    } else if (event_base == WIFI_EVENT && event_id == WIFI_EVENT_STA_CONNECTED) {
+        /* Si la aplicación no necesitase IP, podría comenzar aquí su lógica. */
+        ESP_LOGI(TAG, "WiFi station connected; waiting for an IP address");
     } else if (event_base == WIFI_EVENT && event_id == WIFI_EVENT_STA_DISCONNECTED) {
         if (s_retry_num < EXAMPLE_ESP_MAXIMUM_RETRY) {
             esp_wifi_connect();
@@ -89,6 +99,19 @@ static void event_handler(void* arg, esp_event_base_t event_base,
         ESP_LOGI(TAG, "got ip:" IPSTR, IP2STR(&event->ip_info.ip));
         s_retry_num = 0;
         xEventGroupSetBits(s_wifi_event_group, WIFI_CONNECTED_BIT);
+        /* Aquí se podrían crear sockets e iniciar los protocolos de la aplicación. */
+    } else if (event_base == IP_EVENT && event_id == IP_EVENT_STA_LOST_IP) {
+        /* Se podrían cerrar y recrear los sockets cuando vuelva a obtenerse una IP. */
+        ESP_LOGI(TAG, "station lost its IP address");
+    } else if (event_base == WIFI_EVENT && event_id == WIFI_EVENT_AP_START) {
+        /* Este ejemplo usa modo estación; en modo AP aquí comenzaría el servicio. */
+        ESP_LOGI(TAG, "WiFi access point started");
+    } else if (event_base == WIFI_EVENT && event_id == WIFI_EVENT_AP_STACONNECTED) {
+        /* En modo AP se podría registrar la estación conectada y su información. */
+        ESP_LOGI(TAG, "a station connected to the access point");
+    } else if (event_base == WIFI_EVENT && event_id == WIFI_EVENT_AP_STADISCONNECTED) {
+        /* En modo AP se podrían cerrar los recursos asociados a esa estación. */
+        ESP_LOGI(TAG, "a station disconnected from the access point");
     }
 }
 
@@ -112,7 +135,7 @@ void wifi_init_sta(void)
                                                         NULL,
                                                         &instance_any_id));
     ESP_ERROR_CHECK(esp_event_handler_instance_register(IP_EVENT,
-                                                        IP_EVENT_STA_GOT_IP,
+                                                        ESP_EVENT_ANY_ID,
                                                         &event_handler,
                                                         NULL,
                                                         &instance_got_ip));
