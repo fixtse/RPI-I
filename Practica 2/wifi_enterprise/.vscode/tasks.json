@@ -1,0 +1,24 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "ESP-IDF: Build lab",
+      "type": "shell",
+      "command": "source /opt/esp/idf/export.sh >/dev/null && /opt/esp/python_env/idf6.1_py3.12_env/bin/python3 /opt/esp/idf/tools/idf.py build",
+      "options": {
+        "cwd": "${workspaceFolder}",
+        "shell": {
+          "executable": "/bin/bash",
+          "args": [
+            "-lc"
+          ]
+        }
+      },
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "problemMatcher": []
+    }
+  ]
+}
