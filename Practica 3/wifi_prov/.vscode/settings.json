@@ -1,3 +1,18 @@
 {
-    "idf.currentSetup": "/opt/esp/idf"
+    "idf.currentSetup": "/home/mazd/.espressif/v6.1/esp-idf",
+    "idf.port": "/dev/ttyUSB0",
+    "idf.openOcdConfigs": [
+        "interface/ftdi/esp_ftdi.cfg",
+        "target/esp32.cfg"
+    ],
+    "idf.customExtraVars": {
+        "IDF_TARGET": "esp32"
+    },
+    "clangd.path": "/home/mazd/.espressif/tools/esp-clangd/esp-21.1.3_20260408/esp-clangd/bin/clangd",
+    "clangd.arguments": [
+      "--background-index",
+      "--query-driver=**",
+      "--compile-commands-dir=/home/mazd/RPI-I/Practica 3/wifi_prov/build"
+    ],
+    "idf.flashType": "UART"
 }
