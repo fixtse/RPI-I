@@ -314,6 +314,8 @@ const wifi_prov_event_handler_t wifi_prov_event_handler = {
 
 void app_main(void)
 {
+    //char service_name[12] = {0};
+
     /* Initialize NVS partition */
     esp_err_t ret = nvs_flash_init();
     if (ret == ESP_ERR_NVS_NO_FREE_PAGES || ret == ESP_ERR_NVS_NEW_VERSION_FOUND) {
@@ -395,6 +397,8 @@ void app_main(void)
     ESP_ERROR_CHECK(network_prov_mgr_is_wifi_provisioned(&provisioned));
 
 #endif
+
+    char service_name[12];
     /* If device is not yet provisioned start provisioning service */
     if (!provisioned) {
         ESP_LOGI(TAG, "Starting provisioning");
@@ -404,7 +408,6 @@ void app_main(void)
          *     - Wi-Fi SSID when scheme is network_prov_scheme_softap
          *     - device name when scheme is network_prov_scheme_ble
          */
-        char service_name[12];
         get_device_service_name(service_name, sizeof(service_name));
 
 #ifdef CONFIG_EXAMPLE_PROV_SECURITY_VERSION_1
@@ -431,6 +434,31 @@ void app_main(void)
 
         const char *username  = NULL;
 
+#elif CONFIG_EXAMPLE_PROV_SECURITY_VERSION_0
+        /* What is the security level that we want (0, 1, 2):
+         *      - NETWORK_PROV_SECURITY_0 is simply plain text communication.
+         *      - NETWORK_PROV_SECURITY_1 is secure communication which consists of secure handshake
+         *          using X25519 key exchange and proof of possession (pop) and AES-CTR
+         *          for encryption/decryption of messages.
+         *      - NETWORK_PROV_SECURITY_2 SRP6a based authentication and key exchange
+         *        + AES-GCM encryption/decryption of messages
+         */
+        network_prov_security_t security = NETWORK_PROV_SECURITY_0;
+
+        /* Do we want a proof-of-possession (ignored if Security 0 is selected):
+         *      - this should be a string with length > 0
+         *      - NULL if not used
+         */
+        const char *pop = NULL;
+
+        /* This is the structure for passing security parameters
+         * for the protocomm security 1.
+         */
+       network_prov_security1_params_t *sec_params = pop;
+
+        const char *username  = NULL;
+
+
 #elif CONFIG_EXAMPLE_PROV_SECURITY_VERSION_2
         network_prov_security_t security = NETWORK_PROV_SECURITY_2;
         /* The username must be the same one, which has been used in the generation of salt and verifier */
@@ -439,7 +467,7 @@ void app_main(void)
         /* This pop field represents the password that will be used to generate salt and verifier.
          * The field is present here in order to generate the QR code containing password.
          * In production this password field shall not be stored on the device */
-        const char *username  = EXAMPLE_PROV_SEC2_USERNAME;
+        const char *username  = "EXAMPLE_PROV_SEC2_USERNAME";
         const char *pop = EXAMPLE_PROV_SEC2_PWD;
 #elif CONFIG_EXAMPLE_PROV_SEC2_PROD_MODE
         /* The username and password shall not be embedded in the firmware,
@@ -538,11 +566,14 @@ void app_main(void)
     /* Wait for Wi-Fi connection */
     xEventGroupWaitBits(wifi_event_group, WIFI_CONNECTED_EVENT, true, true, portMAX_DELAY);
 
+    //char device_name[32];
+    //get_device_service_name(device_name, sizeof(device_name));
+
     /* Start main application now */
 #if CONFIG_EXAMPLE_REPROVISIONING
     while (1) {
         for (int i = 0; i < 10; i++) {
-            ESP_LOGI(TAG, "Hello World!");
+            ESP_LOGI(TAG, "Hello World from %s", service_name);
             vTaskDelay(1000 / portTICK_PERIOD_MS);
         }
 
@@ -553,8 +584,9 @@ void app_main(void)
         xEventGroupWaitBits(wifi_event_group, WIFI_CONNECTED_EVENT, true, true, portMAX_DELAY);
     }
 #else
+
     while (1) {
-        ESP_LOGI(TAG, "Hello World!");
+        ESP_LOGI(TAG, "Hello World from %s", service_name);
         vTaskDelay(1000 / portTICK_PERIOD_MS);
     }
 #endif
