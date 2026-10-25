@@ -201,7 +201,7 @@ idf.py build
 idf.py -p /dev/ttyUSB0 flash monitor
 ```
 
-Método: sin ahorro energético
+#### Método: sin ahorro energético
 
 <div align="center">
 
@@ -323,7 +323,7 @@ PING 192.168.1.146 (192.168.1.146) 56(84) bytes of data.
 100 packets transmitted, 100 received, 0% packet loss, time 99084ms
 rtt min/avg/max/mdev = 2.761/10.941/321.103/32.296 ms
 ```
-Método: con ahorro mínimo
+#### Método: con ahorro mínimo
 
 <div align="center">
 
@@ -437,7 +437,7 @@ PING 192.168.1.146 (192.168.1.146) 56(84) bytes of data.
 100 packets transmitted, 100 received, 0% packet loss, time 99053ms
 rtt min/avg/max/mdev = 14.074/236.655/569.192/132.708 ms
 ```
-Método: con ahorro máximo
+#### Método: con ahorro máximo
 
 <div align="center">
 
@@ -571,13 +571,9 @@ import matplotlib.pyplot as plt
 # Archivos de resultados de cada modo de ahorro
 
 archivos = {
-
-"Sin ahorro": "ping_none.txt",
-
-"Ahorro mínimo": "ping_minimum.txt",
-
-"Ahorro máximo": "ping_maximum.txt"
-
+	"Sin ahorro": "ping_none.txt",
+	"Ahorro mínimo": "ping_minimum.txt",
+	"Ahorro máximo": "ping_maximum.txt"
 }
 
 resultados = {}
@@ -587,112 +583,73 @@ print("\n===== RESULTADOS DE LAS PRUEBAS DE PING =====")
 # Leer los archivos y extraer los tiempos de respuesta
 
 for modo, archivo in archivos.items():
+	try:
+		with open(archivo, "r", encoding="utf-8") as f:
+			texto = f.read()
 
-try:
+		# Extrae tiempos como time=3.45 ms o time<1 ms
+		tiempos = [
+			float(t)
+			for t in re.findall(r"time[=<]([\d.]+)\s*ms", texto)
+		]
 
-with open(archivo, "r", encoding="utf-8") as f:
+		resultados[modo] = tiempos
 
-texto = f.read()
+		print(f"\n--- {modo} ---")
+		print(f"Archivo: {archivo}")
+		print(f"Paquetes con respuesta: {len(tiempos)}")
 
-# Extrae tiempos como time=3.45 ms o time<1 ms
+		# Leer estadísticas de pérdida si están en el archivo
+		perdida = re.search(
+			r"(\d+(?:\.\d+)?)%\s*packet loss", texto
+		)
 
-tiempos = [
+		if perdida:
+			print(f"Paquetes perdidos: {perdida.group(1)}%")
+		else:
+			print("Pérdida de paquetes: no disponible")
 
-float(t)
+		if tiempos:
+			print(f"Tiempo mínimo: {min(tiempos):.2f} ms")
+			print(f"Tiempo medio: {statistics.mean(tiempos):.2f} ms")
+			print(f"Tiempo máximo: {max(tiempos):.2f} ms")
 
-for t in re.findall(r"time[=<]([\d.]+)\s*ms", texto)
+			if len(tiempos) > 1:
+				print(
+					f"Desviación estándar: "
+					f"{statistics.stdev(tiempos):.2f} ms"
+				)
+		else:
+			print("No se encontraron tiempos de respuesta.")
 
-]
-
-resultados[modo] = tiempos
-
-print(f"\n--- {modo} ---")
-
-print(f"Archivo: {archivo}")
-
-print(f"Paquetes con respuesta: {len(tiempos)}")
-
-# Leer estadísticas de pérdida si están en el archivo
-
-perdida = re.search(
-
-r"(\d+(?:\.\d+)?)%\s*packet loss", texto
-
-)
-
-if perdida:
-
-print(f"Paquetes perdidos: {perdida.group(1)}%")
-
-else:
-
-print("Pérdida de paquetes: no disponible")
-
-if tiempos:
-
-print(f"Tiempo mínimo: {min(tiempos):.2f} ms")
-
-print(f"Tiempo medio: {statistics.mean(tiempos):.2f} ms")
-
-print(f"Tiempo máximo: {max(tiempos):.2f} ms")
-
-if len(tiempos) > 1:
-
-print(
-
-f"Desviación estándar: "
-
-f"{statistics.stdev(tiempos):.2f} ms"
-
-)
-
-else:
-
-print("No se encontraron tiempos de respuesta.")
-
-except FileNotFoundError:
-
-print(f"\nERROR: no se encuentra el archivo {archivo}")
-
-print("Comprueba que está en la misma carpeta que graficas.py.")
+	except FileNotFoundError:
+		print(f"\nERROR: no se encuentra el archivo {archivo}")
+		print("Comprueba que está en la misma carpeta que graficas.py.")
 
 # Comprobar que hay datos para representar
 
 modos_validos = [
-
-modo for modo, tiempos in resultados.items() if tiempos
-
+	modo for modo, tiempos in resultados.items() if tiempos
 ]
 
 if not modos_validos:
-
-print("\nNo hay datos para generar las gráficas.")
-
-print("Comprueba el contenido de los archivos ping.")
-
-raise SystemExit(1)
+	print("\nNo hay datos para generar las gráficas.")
+	print("Comprueba el contenido de los archivos ping.")
+	raise SystemExit(1)
 
 # GRÁFICA 1: evolución de los tiempos de respuesta
 
 plt.figure(figsize=(11, 6))
 
 for modo in modos_validos:
-
-tiempos = resultados[modo]
-
-plt.plot(
-
-range(1, len(tiempos) + 1),
-
-tiempos,
-
-marker=".",
-
-markersize=4,
-
-label=modo
-
-)
+	tiempos = resultados[modo]
+	plt.plot(
+		range(1, len(tiempos) + 1),
+		tiempos,
+		marker=".",
+		markersize=4,
+		label=modo
+	)
 
 plt.xlabel("Número de respuesta recibida")
 
@@ -713,11 +670,8 @@ plt.close()
 # GRÁFICA 2: comparación de los tiempos medios
 
 medias = [
-
-statistics.mean(resultados[modo])
-
-for modo in modos_validos
-
+	statistics.mean(resultados[modo])
+	for modo in modos_validos
 ]
 
 plt.figure(figsize=(9, 5))
@@ -801,10 +755,16 @@ Método: con ahorro máximo intervalo 5
 
 Se han realizado pruebas de conectividad mediante 100 peticiones ICMP (ping) para los tres modos de ahorro energético Wi-Fi: sin ahorro de energía, ahorro mínimo y ahorro máximo.
 
-En las tres pruebas se recibieron las 100 respuestas, por lo que la pérdida de paquetes fue del 0 %, se observó en el modo, sin ahorro energético el tiempo medio de 10,94 ms. En el modo de ahorro mínimo, el tiempo medio fue de 236,65 ms, mientras que en el modo de ahorro máximo alcanzó los 248,87 ms.
+Los resultados obtenidos fueron los siguientes:
 
-Estos resultados muestran que, durante las pruebas realizadas, los modos de ahorro energético presentaron una latencia media superior a la del modo sin ahorro, la desviación estándar fue mayor en ambos modos de ahorro, lo que indica una mayor dispersión de los tiempos de respuesta. Este comportamiento es compatible con las esperas que pueden producirse cuando el dispositivo utiliza mecanismos de ahorro energético.
+| Modo Wi-Fi | Respuestas | Pérdida | Tiempo medio | Mínimo | Máximo | Desviación estándar |
+|---|---:|---:|---:|---:|---:|---:|
+| Sin ahorro energético | 100/100 | 0 % | 10,94 ms | 2,76 ms | 321,10 ms | 32,30 ms |
+| Ahorro mínimo | 100/100 | 0 % | 236,65 ms | 14,07 ms | 569,19 ms | 132,71 ms |
+| Ahorro máximo | 100/100 | 0 % | 248,84 ms | 11,01 ms | 708,33 ms | 144,16 ms |
 
-También se analizó el efecto del intervalo de escucha en el modo de ahorro máximo. Para los intervalos 1, 3 y 5 se obtuvieron tiempos medios de 173,30 ms, 234,79 ms y 277,29 ms, de lo cual se observó un aumento de la latencia media al incrementar el intervalo de escucha. El valor máximo registrado fue de 888 ms para el intervalo 5.
+Los tres modos mantuvieron la conectividad, ya que no se perdió ningún paquete. Sin embargo, el tiempo medio aumentó considerablemente al activar el ahorro energético: el ahorro mínimo presentó una latencia aproximadamente 21,6 veces mayor que el modo sin ahorro, y el ahorro máximo unas 22,7 veces mayor. Además, la desviación estándar y el tiempo máximo fueron mayores en los modos de ahorro, lo que indica respuestas más variables y la aparición de esperas puntuales. Por tanto, en esta prueba el modo sin ahorro ofreció la menor latencia y mayor estabilidad, mientras que los modos de ahorro redujeron presumiblemente el consumo a costa de la rapidez de respuesta.
 
-El comportamiento observado puede relacionarse con el funcionamiento del ahorro energético Wi-Fi. El punto de acceso transmite balizas periódicas y utiliza la información DTIM para anunciar datos almacenados para la placa que se encuentran en ahorro energético. El intervalo de escucha determina la frecuencia con la que la placa espera escuchar las balizas, de acuerdo con la configuración Wi-Fi utilizada. Si el dispositivo tarda más en comprobar si hay datos pendientes, algunas comunicaciones pueden experimentar una mayor latencia.
+También se analizó el efecto del intervalo de escucha en el modo de ahorro máximo. Para los intervalos 1, 3 y 5 se obtuvieron tiempos medios de 173,30 ms, 234,79 ms y 277,29 ms, respectivamente. El promedio aumentó aproximadamente un 60 % entre los intervalos 1 y 5, y el valor máximo registrado fue de 888 ms para el intervalo 5. Esto muestra que, al escuchar con menor frecuencia, un ping puede esperar más tiempo hasta que el ESP32 vuelva a activar su radio.
+
+El comportamiento observado puede relacionarse con el funcionamiento del ahorro energético Wi-Fi. El punto de acceso transmite balizas periódicas y utiliza la información DTIM para anunciar datos almacenados para la placa que se encuentra en ahorro energético. El intervalo de escucha determina cuántas balizas puede esperar el ESP32 antes de comprobar si hay datos pendientes. Si el dispositivo tarda más en realizar esta comprobación, aumenta la latencia del ping; por eso los intervalos de escucha más altos producen, en general, tiempos de respuesta mayores.
