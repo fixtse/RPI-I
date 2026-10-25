@@ -60,11 +60,27 @@ Utilizando las aplicaciones móviles, aprovisiona tu ESP32 tanto mediante BLE co
 
 Revisa el código del ejemplo e identifica y explica las variables y los valores utilizados para cada uno de los niveles de seguridad (pista: consulta la llamada a network_prov_mgr_start_provisioning()).
 
-<div align="center">
 
-![image8](images/image8.png)
+En el ejemplo, el nivel de seguridad se selecciona con la variable `security` y se envía en la llamada:
 
-</div>
+```c
+network_prov_mgr_start_provisioning(
+	security,                   // nivel de seguridad
+	(const void *) sec_params,  // parametros de ese nivel
+	service_name,               // nombre del servicio
+	service_key                 // clave del SoftAP
+);
+```
+
+Los tres niveles disponibles son:
+
+- **Seguridad 0 (`NETWORK_PROV_SECURITY_0 = 0`)**: no hay seguridad; la comunicación es en texto plano. `security` toma el valor `NETWORK_PROV_SECURITY_0`, `pop` vale `NULL` y `sec_params` también queda en `NULL`.
+- **Seguridad 1 (`NETWORK_PROV_SECURITY_1 = 1`)**: realiza un intercambio de claves y utiliza cifrado AES-CTR. Puede utilizar una prueba de posesión (*proof of possession*, PoP). En el ejemplo, `security` toma el valor `NETWORK_PROV_SECURITY_1`, `pop` vale `"abcd1234"` y `sec_params` apunta a ese PoP.
+- **Seguridad 2 (`NETWORK_PROV_SECURITY_2 = 2`)**: utiliza autenticación e intercambio de claves SRP6a y cifrado AES-GCM. `security` toma el valor `NETWORK_PROV_SECURITY_2`. `sec2_params` contiene `salt`, `salt_len`, `verifier` y `verifier_len`; estos datos se obtienen con `example_get_sec2_salt()` y `example_get_sec2_verifier()`, y `sec_params` apunta a `sec2_params`.
+
+En el modo de desarrollo de seguridad 2, el código define `EXAMPLE_PROV_SEC2_USERNAME` como `"wifiprov"` y `EXAMPLE_PROV_SEC2_PWD` como `"abcd1234"`. Estos valores se utilizan para generar el *salt* y el *verifier*.
+
+Las variables comunes de la llamada son `service_name` y `service_key`. `service_name` se genera con la dirección MAC y tiene el formato `PROV_XXXXXX`; es el SSID del SoftAP o el nombre del dispositivo cuando se usa BLE. `service_key` vale `NULL`: en BLE se ignora y en SoftAP significa que el punto de acceso no tiene una contraseña adicional. 
 
 
 ### Ejercicio 3
