@@ -189,6 +189,8 @@ idf.py menuconfig
 
 ![image21](images/image21.png)
 
+*Figura 1. Configuración del ejemplo `power_save` en `menuconfig`.*
+
 </div>
 
 Comandos para construir y fashar
@@ -207,6 +209,8 @@ idf.py -p /dev/ttyUSB0 flash monitor
 
 ![image1](images/image1.png)
 
+*Figura 2. Configuración del ESP32 sin ahorro energético.*
+
 </div>
 
 Conectamos la placa al ap
@@ -214,6 +218,8 @@ Conectamos la placa al ap
 <div align="center">
 
 ![image2](images/image2.png)
+
+*Figura 3. Conexión de la placa al punto de acceso para realizar las pruebas.*
 
 </div>
 
@@ -329,6 +335,8 @@ rtt min/avg/max/mdev = 2.761/10.941/321.103/32.296 ms
 
 ![image22](images/image22.png)
 
+*Figura 4. Configuración del ESP32 con ahorro energético mínimo.*
+
 </div>
 
 ```text
@@ -443,11 +451,15 @@ rtt min/avg/max/mdev = 14.074/236.655/569.192/132.708 ms
 
 ![image9](images/image9.png)
 
+*Figura 5. Configuración del ESP32 con ahorro energético máximo.*
+
 </div>
 
 <div align="center">
 
 ![image18](images/image18.png)
+
+*Figura 6. Ajuste del intervalo de escucha en el modo de ahorro máximo.*
 
 </div>
 
@@ -705,11 +717,15 @@ Estas gráficas comparan los tiempos de respuesta de los tres modos.
 
 ![image19](images/image19.png)
 
+*Figura 7. Evolución de los tiempos de respuesta de los pings en los tres modos.*
+
 </div>
 
 <div align="center">
 
 ![image6](images/image6.png)
+
+*Figura 8. Comparación de los tiempos medios de ping por modo de ahorro.*
 
 </div>
 
@@ -721,6 +737,8 @@ Método: con ahorro máximo intervalo 1
 
 ![image14](images/image14.png)
 
+*Figura 9. Tiempos de respuesta con intervalo de escucha 1.*
+
 </div>
 
 Método: con ahorro máximo intervalo 3
@@ -728,6 +746,8 @@ Método: con ahorro máximo intervalo 3
 <div align="center">
 
 ![image3](images/image3.png)
+
+*Figura 10. Tiempos de respuesta con intervalo de escucha 3.*
 
 </div>
 
@@ -737,17 +757,23 @@ Método: con ahorro máximo intervalo 5
 
 ![image15](images/image15.png)
 
+*Figura 11. Tiempos de respuesta con intervalo de escucha 5.*
+
 </div>
 
 <div align="center">
 
 ![image11](images/image11.png)
 
+*Figura 12. Comparación gráfica de los resultados del modo de ahorro máximo.*
+
 </div>
 
 <div align="center">
 
 ![image13](images/image13.png)
+
+*Figura 13. Resumen gráfico del efecto del intervalo de escucha.*
 
 </div>
 
