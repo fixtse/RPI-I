@@ -27,17 +27,23 @@ Utilizando las aplicaciones móviles, aprovisiona tu ESP32 tanto mediante BLE co
 
 ![imagen24](images/imagen24.png)
 
+*Captura del aprovisionamiento del ESP32 mediante SoftAP.*
+
 </div>
 
 <div align="center">
 
-<img src="images/imagen26.jpg" alt="imagen26" width="300" height="650">
+<img src="images/imagen26.jpg" alt="imagen26" width="300" height="650" />
+
+*Pantalla de la aplicación móvil durante el aprovisionamiento mediante SoftAP.*
 
 </div>
 
 <div align="center">
 
 ![imagen25](images/imagen25.png)
+
+*Resultado del aprovisionamiento mediante SoftAP.*
 
 </div>
 
@@ -47,11 +53,15 @@ Utilizando las aplicaciones móviles, aprovisiona tu ESP32 tanto mediante BLE co
 
 ![imagen27](images/imagen27.png)
 
+*Captura del aprovisionamiento del ESP32 mediante BLE.*
+
 </div>
 
 <div align="center">
 
 ![imagen28](images/imagen28.png)
+
+*Resultado del aprovisionamiento mediante BLE.*
 
 </div>
 
@@ -93,6 +103,8 @@ Primero, hay que implementar un nivel de seguridad 0 que falta en el código. Po
 
 ![image8](images/image8.png)
 
+*Implementación del nivel de seguridad 0 en el código del ejemplo.*
+
 </div>
 
 También hay que añadir el menú correspondiente en `menuconfig` para poder ver o seleccionar la opción en este menú.
@@ -101,11 +113,15 @@ También hay que añadir el menú correspondiente en `menuconfig` para poder ver
 
 ![image20](images/image20.png)
 
+*Menú de configuración para seleccionar el nivel de seguridad.*
+
 </div>
 
 <div align="center">
 
 ![image23](images/image23.png)
+
+*Selección del modo de seguridad 0 en `menuconfig`.*
 
 </div>
 
@@ -115,6 +131,8 @@ Ahora, podemos comprobarlo usando el comando con `esp_prov.py` en un terminal.
 
 ![image17](images/image17.png)
 
+*Ejecución de `esp_prov.py` para realizar el aprovisionamiento.*
+
 </div>
 
 y al usar Wireshark, vimos que las credenciales se ven claramente
@@ -122,6 +140,8 @@ y al usar Wireshark, vimos que las credenciales se ven claramente
 <div align="center">
 
 ![image4](images/image4.png)
+
+*Captura de Wireshark con las credenciales transmitidas sin cifrar.*
 
 </div>
 
@@ -131,11 +151,15 @@ ahora volvemos al nivel 2 de seguridad
 
 ![image10](images/image10.png)
 
+*Configuración del nivel de seguridad 2.*
+
 </div>
 
 <div align="center">
 
 ![image16](images/image16.png)
+
+*Ejecución del aprovisionamiento con el nivel de seguridad 2.*
 
 </div>
 
@@ -144,6 +168,8 @@ y usando Wireshark, se puede ver que la información viene cifrada
 <div align="center">
 
 ![image12](images/image12.png)
+
+*Captura de Wireshark con la información del aprovisionamiento cifrada.*
 
 </div>
 
@@ -157,6 +183,8 @@ Dentro de `main_app()` creamos una variable de tipo `char` para guardar el nombr
 
 ![image5](images/image5.png)
 
+*Modificación de `main_app()` para almacenar el nombre del dispositivo.*
+
 </div>
 
 por último, cambiamos un poco el loop del código para mostrar el mensaje deseado.
@@ -165,11 +193,15 @@ por último, cambiamos un poco el loop del código para mostrar el mensaje desea
 
 ![image7](images/image7.png)
 
+*Modificación del bucle principal para mostrar el nombre recibido.*
+
 </div>
 
 <div align="center">
 
 ![image16](images/image16.png)
+
+*Salida del programa mostrando el mensaje personalizado del dispositivo.*
 
 </div>
 
