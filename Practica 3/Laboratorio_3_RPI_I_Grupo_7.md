@@ -18,7 +18,7 @@ Número de laboratorio: 1
 
 ### Ejercicio 1
 
-Utilizando las aplicaciones móviles, aprovisiona tu ESP32 tanto mediante BLE como mediante SoftAP, empleando las credenciales de la red Wi-Fi del laboratorio, de tu casa o de un AP creado con otro móvil. Cambia el modo de aprovisionamiento desde menuconfig. Antes de repetir cada experimento, ejecuta idf.py erase-flash para borrar también la información de aprovisionamiento de sesiones anteriores.
+Utilizando las aplicaciones móviles, aprovisiona tu ESP32 tanto mediante BLE como mediante SoftAP, empleando las credenciales de la red Wi-Fi del laboratorio, de tu casa o de un AP creado con otro móvil. Cambia el modo de aprovisionamiento desde `menuconfig`. Antes de repetir cada experimento, ejecuta `idf.py erase-flash` para borrar también la información de aprovisionamiento de sesiones anteriores.
 
 
 #### SoftAP
@@ -58,7 +58,7 @@ Utilizando las aplicaciones móviles, aprovisiona tu ESP32 tanto mediante BLE co
 
 ### Ejercicio 2
 
-Revisa el código del ejemplo e identifica y explica las variables y los valores utilizados para cada uno de los niveles de seguridad (pista: consulta la llamada a network_prov_mgr_start_provisioning()).
+Revisa el código del ejemplo e identifica y explica las variables y los valores utilizados para cada uno de los niveles de seguridad (pista: consulta la llamada a `network_prov_mgr_start_provisioning()`).
 
 
 En el ejemplo, el nivel de seguridad se selecciona con la variable `security` y se envía en la llamada:
@@ -75,8 +75,8 @@ network_prov_mgr_start_provisioning(
 Los tres niveles disponibles son:
 
 - **Seguridad 0 (`NETWORK_PROV_SECURITY_0 = 0`)**: no hay seguridad; la comunicación es en texto plano. `security` toma el valor `NETWORK_PROV_SECURITY_0`, `pop` vale `NULL` y `sec_params` también queda en `NULL`.
-- **Seguridad 1 (`NETWORK_PROV_SECURITY_1 = 1`)**: realiza un intercambio de claves y utiliza cifrado AES-CTR. Puede utilizar una prueba de posesión (*proof of possession*, PoP). En el ejemplo, `security` toma el valor `NETWORK_PROV_SECURITY_1`, `pop` vale `"abcd1234"` y `sec_params` apunta a ese PoP.
-- **Seguridad 2 (`NETWORK_PROV_SECURITY_2 = 2`)**: utiliza autenticación e intercambio de claves SRP6a y cifrado AES-GCM. `security` toma el valor `NETWORK_PROV_SECURITY_2`. `sec2_params` contiene `salt`, `salt_len`, `verifier` y `verifier_len`; estos datos se obtienen con `example_get_sec2_salt()` y `example_get_sec2_verifier()`, y `sec_params` apunta a `sec2_params`.
+- **Seguridad 1 (`NETWORK_PROV_SECURITY_1 = 1`)**: realiza un intercambio de claves y utiliza cifrado `AES-CTR`. Puede utilizar una prueba de posesión (*proof of possession*, `PoP`). En el ejemplo, `security` toma el valor `NETWORK_PROV_SECURITY_1`, `pop` vale `"abcd1234"` y `sec_params` apunta a ese `PoP`.
+- **Seguridad 2 (`NETWORK_PROV_SECURITY_2 = 2`)**: utiliza autenticación e intercambio de claves `SRP6a` y cifrado `AES-GCM`. `security` toma el valor `NETWORK_PROV_SECURITY_2`. `sec2_params` contiene `salt`, `salt_len`, `verifier` y `verifier_len`; estos datos se obtienen con `example_get_sec2_salt()` y `example_get_sec2_verifier()`, y `sec_params` apunta a `sec2_params`.
 
 En el modo de desarrollo de seguridad 2, el código define `EXAMPLE_PROV_SEC2_USERNAME` como `"wifiprov"` y `EXAMPLE_PROV_SEC2_PWD` como `"abcd1234"`. Estos valores se utilizan para generar el *salt* y el *verifier*.
 
@@ -85,9 +85,9 @@ Las variables comunes de la llamada son `service_name` y `service_key`. `service
 
 ### Ejercicio 3
 
-Modifica el código del ejemplo para forzar el nivel de seguridad 0 y realiza el aprovisionamiento mediante SoftAP utilizando esp_prov.py. Captura el tráfico de red con Wireshark y comprueba que las credenciales se envían sin cifrar. Después, vuelve a configurar el nivel de seguridad 2, repite el proceso y observa cómo las claves se intercambian cifradas.
+Modifica el código del ejemplo para forzar el nivel de seguridad 0 y realiza el aprovisionamiento mediante SoftAP utilizando `esp_prov.py`. Captura el tráfico de red con Wireshark y comprueba que las credenciales se envían sin cifrar. Después, vuelve a configurar el nivel de seguridad 2, repite el proceso y observa cómo las claves se intercambian cifradas.
 
-Primero, hay que implementar un nivel de seguridad 0 que falta en el código. Podemos usar el marco de seguridad 1, cambiando sus variables de su función a NULL.
+Primero, hay que implementar un nivel de seguridad 0 que falta en el código. Podemos usar el marco de seguridad 1, cambiando sus variables de su función a `NULL`.
 
 <div align="center">
 
@@ -95,7 +95,7 @@ Primero, hay que implementar un nivel de seguridad 0 que falta en el código. Po
 
 </div>
 
-También hay que añadir el menú correspondiente en el manuconfig para poder ver o seleccionar la opción en este menú
+También hay que añadir el menú correspondiente en `menuconfig` para poder ver o seleccionar la opción en este menú.
 
 <div align="center">
 
@@ -109,7 +109,7 @@ También hay que añadir el menú correspondiente en el manuconfig para poder ve
 
 </div>
 
-ahora, podemos comprobarlo usando el commando con esp_prov.py en un terminal
+Ahora, podemos comprobarlo usando el comando con `esp_prov.py` en un terminal.
 
 <div align="center">
 
@@ -149,9 +149,9 @@ y usando Wireshark, se puede ver que la información viene cifrada
 
 ### Ejercicio 4
 
-Realiza el aprovisionamiento mediante BLE o SoftAP y utiliza el parámetro --custom_data de esp_prov.py para enviar un nombre de dispositivo. Antes, modifica el programa para que en el bucle principal se muestre el mensaje "Hello world from ...", sustituyendo los puntos suspensivos por el nombre recibido durante el aprovisionamiento. Captura el tráfico de red con Wireshark e identifica el paquete que contiene el nombre del dispositivo.
+Realiza el aprovisionamiento mediante BLE o SoftAP y utiliza el parámetro `--custom_data` de `esp_prov.py` para enviar un nombre de dispositivo. Antes, modifica el programa para que en el bucle principal se muestre el mensaje `Hello world from ...`, sustituyendo los puntos suspensivos por el nombre recibido durante el aprovisionamiento. Captura el tráfico de red con Wireshark e identifica el paquete que contiene el nombre del dispositivo.
 
-Dentro de main_app() creamos una variable de tipo “char” para guardar el nombre del dispositivo, y después usamos la funcion “get_device_service_name()” con esta variable para tener el nombre.
+Dentro de `main_app()` creamos una variable de tipo `char` para guardar el nombre del dispositivo, y después usamos la función `get_device_service_name()` con esta variable para obtener el nombre.
 
 <div align="center">
 
@@ -175,7 +175,7 @@ por último, cambiamos un poco el loop del código para mostrar el mensaje desea
 
 ### Ejercicio 5
 
-Compila, flashea y ejecuta el ejemplo power_save utilizando los tres modos disponibles: sin ahorro energético, con ahorro mínimo y con ahorro máximo. En todos los casos, conecta el ESP32 a un punto de acceso y, desde un portátil conectado al mismo AP, ejecuta diferentes pings dirigidos al ESP32 y observa cómo varía el tiempo de respuesta. En el modo de ahorro máximo, prueba distintos intervalos de escucha y comprueba cómo afectan a los tiempos de respuesta de los pings.
+Compila, flashea y ejecuta el ejemplo `power_save` utilizando los tres modos disponibles: sin ahorro energético, con ahorro mínimo y con ahorro máximo. En todos los casos, conecta el ESP32 a un punto de acceso y, desde un portátil conectado al mismo AP, ejecuta diferentes pings dirigidos al ESP32 y observa cómo varía el tiempo de respuesta. En el modo de ahorro máximo, prueba distintos intervalos de escucha y comprueba cómo afectan a los tiempos de respuesta de los pings.
 
 Para cada modo, representa gráficamente el tiempo de respuesta de los pings. Relaciona los resultados con los intervalos DTIM y de escucha y discute los resultados obtenidos.
 
@@ -557,7 +557,7 @@ PING 192.168.1.146 (192.168.1.146) 56(84) bytes of data.
 100 packets transmitted, 100 received, 0% packet loss, time 99114ms
 rtt min/avg/max/mdev = 11.013/248.844/708.332/144.160 ms
 ```
-Para realizar la gráfica se procede a $install matplotlib de lo cual de los métodos se ha generado un archivo para cada método
+Para realizar las gráficas, se instala el paquete `matplotlib`; a partir de los datos de cada método se genera un archivo para cada modo.
 
 Codigo de python3 para generar graficas
 
