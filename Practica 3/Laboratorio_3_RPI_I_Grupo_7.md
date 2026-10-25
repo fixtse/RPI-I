@@ -20,6 +20,9 @@ Número de laboratorio: 1
 
 Utilizando las aplicaciones móviles, aprovisiona tu ESP32 tanto mediante BLE como mediante SoftAP, empleando las credenciales de la red Wi-Fi del laboratorio, de tu casa o de un AP creado con otro móvil. Cambia el modo de aprovisionamiento desde menuconfig. Antes de repetir cada experimento, ejecuta idf.py erase-flash para borrar también la información de aprovisionamiento de sesiones anteriores.
 
+
+#### SoftAP
+
 <div align="center">
 
 ![imagen24](images/imagen24.png)
@@ -37,6 +40,21 @@ Utilizando las aplicaciones móviles, aprovisiona tu ESP32 tanto mediante BLE co
 ![imagen25](images/imagen25.png)
 
 </div>
+
+#### BLE
+
+<div align="center">
+
+![imagen27](images/imagen27.png)
+
+</div>
+
+<div align="center">
+
+![imagen28](images/imagen28.png)
+
+</div>
+
 
 ### Ejercicio 2
 
