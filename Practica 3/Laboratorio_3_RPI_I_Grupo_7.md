@@ -22,19 +22,19 @@ Utilizando las aplicaciones móviles, aprovisiona tu ESP32 tanto mediante BLE co
 
 <div align="center">
 
-![image24](images/imag24.png)
+![imagen24](images/imag24.png)
 
 </div>
 
 <div align="center">
 
-![image26](images/imag26.png)
+![imagen26](images/imagen26.jpg)
 
 </div>
 
 <div align="center">
 
-![image25](images/image25.png)
+![imagen25](images/imagen25.png)
 
 </div>
 
