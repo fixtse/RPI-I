@@ -114,6 +114,24 @@ Captura el estado de la red cuando los demás nodos de tu red mesh hayan llegado
 
 En este ejercicio se creó una red mesh independiente para cada grupo de nodos. Aunque las tres redes utilizan el mismo punto de acceso físico (`IoT18 AP`, MAC `8c:86:dd:44:1a:af`), cada una tiene un `Mesh ID` diferente. Por tanto, los nodos solo pueden asociarse y encaminar tráfico dentro de la malla cuyo identificador coincide con su configuración.
 
+<div align="center">
+
+![ejercicio3](img/ejercicio3.png)
+
+*Configuración de Mesh ID*
+
+</div>
+
+
+<div align="center">
+
+![ejercicio3_nodoRaiz](img/ejercicio3_nodoRaiz.png)
+
+*Salida como Nodo Raiz "Amir"*
+
+</div>
+
+
 La topología obtenida muestra las siguientes rutas después de la convergencia:
 
 - En `Mesh01` (`...0x01`), Sandra, Diego, Sheng y Jose utilizan la contraseña correspondiente a la red principal. Amir y Jenni, aunque tienen el mismo `Mesh ID`, configuraron otra contraseña de red mesh. Por este motivo no pudieron asociarse a Sandra ni integrarse en su misma malla de forma normal; se conectaron entre sí, quedando Amir como padre de Jenni. Por tanto, el mismo identificador no fue suficiente para que todos los nodos formaran una única red, ya que la contraseña también debe coincidir.
