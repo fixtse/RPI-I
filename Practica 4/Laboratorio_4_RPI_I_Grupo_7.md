@@ -37,7 +37,7 @@ I (452491) mesh: 5161<active>parent layer:1(node), channel:7, rssi:-54, assoc:6(
 W (454561) mesh_main: [#RX:184/529][L:2] parent:34:85:18:01:71:a9, receive from 34:85:18:01:71:a8, size=1460, heap:156184, flag:0[err:0x0, proto:0, tos:0]
 ```
 
-#### Topologia
+#### Topología
 
 La topología final se representa en el siguiente grafo.
 
@@ -45,7 +45,7 @@ La topología final se representa en el siguiente grafo.
 
 ![image](img/image.png)
 
-*Diagrama de Red Mesh*
+*Topología de Red Mesh*
 
 </div>
 
@@ -73,14 +73,7 @@ W (2545031) mesh_main: [#RX:928/408][L:3] parent:34:85:18:02:8b:c1, receive from
 Por tanto, la nueva topología tiene tres niveles: el padre en la raíz, el nodo intermedio en la capa 2 y nuestro nodo en la capa 3. El grafo de la imagen representa esta relación jerárquica.
 
 
-
-<div align="center">
-
-![ejercicio2](img/ejercicio2.png)
-
-</div>
-
-#### Topologia
+#### Topología
 
 La topología final se representa en el siguiente grafo.
 
@@ -88,7 +81,8 @@ La topología final se representa en el siguiente grafo.
 
 ![image2](img/image2.png)
 
-*Diagrama de Red Mesh*
+*Topología de Red Mesh*
 
 </div>
+
 
