@@ -1,0 +1,149 @@
+I (296441) mesh_main: layer:2, rtableSize:1, NODE
+W (297031) wifi:(->sleep)busy, waked:1, dream:0, sleep:0
+W (297311) mesh_main: [#RX:126/472][L:2] parent:34:85:18:01:71:a9, receive from 34:85:18:01:71:a8, size:1460, heap:156184, flag:0[err:0x0, proto:0, tos:0]
+W (299101) wifi:(->sleep)busy, waked:1, dream:0, sleep:0
+W (302531) mesh_main: [#RX:127/473][L:2] parent:34:85:18:01:71:a9, receive from 34:85:18:01:71:a8, size:1460, heap:156184, flag:0[err:0x0, proto:0, tos:0]
+W (304451) mesh_main: [#RX:128/474][L:2] parent:34:85:18:01:71:a9, receive from 34:85:18:01:71:a8, size:1460, heap:156184, flag:0[err:0x0, proto:0, tos:0]
+W (304651) wifi:(->sleep)busy, waked:1, dream:0, sleep:0
+I (306441) mesh_main: layer:2, rtableSize:1, NODE
+W (306821) wifi:(->sleep)busy, waked:1, dream:0, sleep:0
+W (307121) mesh_main: [#RX:129/475][L:2] parent:34:85:18:01:71:a9, receive from 34:85:18:01:71:a8, size:1460, heap:156184, flag:0[err:0x0, proto:0, tos:0]
+W (309391) wifi:(->sleep)busy, waked:1, dream:0, sleep:0
+W (309921) mesh_main: [#RX:130/476][L:2] parent:34:85:18:01:71:a9, receive from 34:85:18:01:71:a8, size:1460, heap:156184, flag:0[err:0x0, proto:0, tos:0]
+W (312341) mesh_main: [#RX:131/477][L:2] parent:34:85:18:01:71:a9, receive from 34:85:18:01:71:a8, size:1460, heap:156184, flag:0[err:0x0, proto:0, tos:0]
+W (312341) wifi:(->sleep)busy, waked:1, dream:0, sleep:0
+W (315241) mesh_main: [#RX:132/478][L:2] parent:34:85:18:01:71:a9, receive from 34:85:18:01:71:a8, size:1460, heap:156184, flag:0[err:0x0, proto:0, tos:0]
+I (316441) mesh_main: layer:2, rtableSize:1, NODE
+W (317351) wifi:(->sleep)busy, waked:1, dream:0, sleep:0
+W (317651) mesh_main: [#RX:133/479][L:2] parent:34:85:18:01:71:a9, receive from 34:85:18:01:71:a8, size:1460, heap:156184, flag:0[err:0x0, proto:0, tos:0]
+W (319361) wifi:(->sleep)busy, waked:1, dream:0, sleep:0
+W (319551) mesh_main: [#RX:134/480][L:2] parent:34:85:18:01:71:a9, receive from 34:85:18:01:71:a8, size:1460, heap:156184, flag:0[err:0x0, proto:0, tos:0]
+W (322561) mesh_main: [#RX:135/481][L:2] parent:34:85:18:01:71:a9, receive from 34:85:18:01:71:a8, size:1460, heap:156184, flag:0[err:0x0, proto:0, tos:0]
+W (324461) mesh_main: [#RX:136/482][L:2] parent:34:85:18:01:71:a9, receive from 34:85:18:01:71:a8, size:1460, heap:156184, flag:0[err:0x0, proto:0, tos:0]
+W (325651) wifi:(->sleep)busy, waked:1, dream:0, sleep:0
+I (326441) mesh_main: layer:2, rtableSize:1, NODE
+W (326501) mesh_main: [#RX:137/483][L:2] parent:34:85:18:01:71:a9, receive from 34:85:18:01:71:a8, size:1460, heap:156184, flag:0[err:0x0, proto:0, tos:0]
+W (331011) mesh_main: [#RX:138/484][L:2] parent:34:85:18:01:71:a9, receive from 34:85:18:01:71:a8, size:1460, heap:156184, flag:0[err:0x0, proto:0, tos:0]
+W (332661) wifi:(->sleep)busy, waked:1, dream:0, sleep:0
+W (334061) mesh_main: [#RX:139/485][L:2] parent:34:85:18:01:71:a9, receive from 34:85:18:01:71:a8, size:1460, heap:156184, flag:0[err:0x0, proto:0, tos:0]
+I (336441) mesh_main: layer:2, rtableSize:1, NODE
+W (337621) wifi:(->sleep)busy, waked:1, dream:0, sleep:0
+W (337981) mesh_main: [#RX:140/486][L:2] parent:34:85:18:01:71:a9, receive from 34:85:18:01:71:a8, size:1460, heap:156184, flag:0[err:0x0, proto:0, tos:0]
+W (339161) wifi:(->sleep)busy, waked:1, dream:0, sleep:0
+W (339251) wifi:(->sleep)busy, waked:1, dream:0, sleep:0
+W (340341) mesh_main: [#RX:141/487][L:2] parent:34:85:18:01:71:a9, receive from 34:85:18:01:71:a8, size:1460, heap:156184, flag:0[err:0x0, proto:0, tos:0]
+W (342741) mesh_main: [#RX:142/488][L:2] parent:34:85:18:01:71:a9, receive from 34:85:18:01:71:a8, size:1460, heap:156184, flag:0[err:0x0, proto:0, tos:0]
+W (345141) mesh_main: [#RX:143/489][L:2] parent:34:85:18:01:71:a9, receive from 34:85:18:01:71:a8, size:1460, heap:156184, flag:0[err:0x0, proto:0, tos:0]
+W (345341) wifi:(->sleep)busy, waked:1, dream:0, sleep:0
+I (346441) mesh_main: layer:2, rtableSize:1, NODE
+W (347621) wifi:(->sleep)busy, waked:1, dream:0, sleep:0
+W (347901) mesh_main: [#RX:144/490][L:2] parent:34:85:18:01:71:a9, receive from 34:85:18:01:71:a8, size:1460, heap:156184, flag:0[err:0x0, proto:0, tos:0]
+W (350251) wifi:(->sleep)busy, waked:1, dream:0, sleep:0
+W (350541) mesh_main: [#RX:145/491][L:2] parent:34:85:18:01:71:a9, receive from 34:85:18:01:71:a8, size:1460, heap:156184, flag:0[err:0x0, proto:0, tos:0]
+W (352061) wifi:(->sleep)busy, waked:1, dream:0, sleep:0
+W (352151) wifi:(->sleep)busy, waked:1, dream:0, sleep:0
+W (352291) mesh_main: [#RX:146/492][L:2] parent:34:85:18:01:71:a9, receive from 34:85:18:01:71:a8, size:1460, heap:156184, flag:0[err:0x0, proto:0, tos:0]
+W (354381) wifi:(->sleep)busy, waked:1, dream:0, sleep:0
+W (354701) mesh_main: [#RX:147/493][L:2] parent:34:85:18:01:71:a9, receive from 34:85:18:01:71:a8, size:1460, heap:156184, flag:0[err:0x0, proto:0, tos:0]
+W (355101) wifi:(->sleep)busy, waked:1, dream:0, sleep:0
+I (356441) mesh_main: layer:2, rtableSize:1, NODE
+W (357461) wifi:(->sleep)busy, waked:1, dream:0, sleep:0
+W (357761) mesh_main: [#RX:148/494][L:2] parent:34:85:18:01:71:a9, receive from 34:85:18:01:71:a8, size:1460, heap:156184, flag:0[err:0x0, proto:0, tos:0]
+W (359141) wifi:(->sleep)busy, waked:1, dream:0, sleep:0
+W (360481) wifi:(->sleep)busy, waked:1, dream:0, sleep:0
+W (361541) mesh_main: [#RX:149/495][L:2] parent:34:85:18:01:71:a9, receive from 34:85:18:01:71:a8, size:1460, heap:156184, flag:0[err:0x0, proto:0, tos:0]
+W (362691) wifi:(->sleep)busy, waked:1, dream:0, sleep:0
+W (363681) mesh_main: [#RX:150/496][L:2] parent:34:85:18:01:71:a9, receive from 34:85:18:01:71:a8, size:1460, heap:156184, flag:0[err:0x0, proto:0, tos:0]
+W (363861) wifi:(->sleep)busy, waked:1, dream:0, sleep:0
+W (364611) wifi:(->sleep)busy, waked:1, dream:0, sleep:0
+W (365231) wifi:(->sleep)busy, waked:1, dream:0, sleep:0
+I (366441) mesh_main: layer:2, rtableSize:1, NODE
+W (366681) wifi:(->sleep)busy, waked:1, dream:0, sleep:0
+W (366961) mesh_main: [#RX:151/497][L:2] parent:34:85:18:01:71:a9, receive from 34:85:18:01:71:a8, size:1460, heap:156184, flag:0[err:0x0, proto:0, tos:0]
+W (368821) wifi:(->sleep)busy, waked:1, dream:0, sleep:0
+W (369111) mesh_main: [#RX:152/498][L:2] parent:34:85:18:01:71:a9, receive from 34:85:18:01:71:a8, size:1460, heap:156184, flag:0[err:0x0, proto:0, tos:0]
+W (369541) wifi:(->sleep)busy, waked:1, dream:0, sleep:0
+W (371121) wifi:(->sleep)busy, waked:1, dream:0, sleep:0
+W (371961) mesh_main: [#RX:153/499][L:2] parent:34:85:18:01:71:a9, receive from 34:85:18:01:71:a8, size:1460, heap:156184, flag:0[err:0x0, proto:0, tos:0]
+W (372161) wifi:(->sleep)busy, waked:1, dream:0, sleep:0
+W (373881) mesh_main: [#RX:154/500][L:2] parent:34:85:18:01:71:a9, receive from 34:85:18:01:71:a8, size:1460, heap:156184, flag:0[err:0x0, proto:0, tos:0]
+W (375521) wifi:(->sleep)busy, waked:1, dream:0, sleep:0
+W (376041) wifi:(->sleep)busy, waked:1, dream:0, sleep:0
+I (376441) mesh_main: layer:2, rtableSize:1, NODE
+W (376591) wifi:(->sleep)busy, waked:1, dream:0, sleep:0
+W (376821) mesh_main: [#RX:155/501][L:2] parent:34:85:18:01:71:a9, receive from 34:85:18:01:71:a8, size:1460, heap:156184, flag:0[err:0x0, proto:0, tos:0]
+W (378511) wifi:(->sleep)busy, waked:1, dream:0, sleep:0
+W (380011) wifi:(->sleep)busy, waked:1, dream:0, sleep:0
+W (380361) mesh_main: [#RX:156/502][L:2] parent:34:85:18:01:71:a9, receive from 34:85:18:01:71:a8, size:1460, heap:156184, flag:0[err:0x0, proto:0, tos:0]
+W (380601) wifi:(->sleep)busy, waked:1, dream:0, sleep:0
+W (382631) mesh_main: [#RX:157/503][L:2] parent:34:85:18:01:71:a9, receive from 34:85:18:01:71:a8, size:1460, heap:156184, flag:0[err:0x0, proto:0, tos:0]
+W (385191) wifi:(->sleep)busy, waked:1, dream:0, sleep:0
+W (385511) mesh_main: [#RX:158/504][L:2] parent:34:85:18:01:71:a9, receive from 34:85:18:01:71:a8, size:1460, heap:156184, flag:0[err:0x0, proto:0, tos:0]
+I (386441) mesh_main: layer:2, rtableSize:1, NODE
+I (388391) mesh: 5127<assoc>parent layer:1, channel:7, rssi:-62, assoc:6, rssi threshold<-78,-82,-85>
+W (388621) mesh_main: [#RX:159/505][L:2] parent:34:85:18:01:71:a9, receive from 34:85:18:01:71:a8, size:1460, heap:156184, flag:0[err:0x0, proto:0, tos:0]
+W (390621) mesh_main: [#RX:160/506][L:2] parent:34:85:18:01:71:a9, receive from 34:85:18:01:71:a8, size:1460, heap:156184, flag:0[err:0x0, proto:0, tos:0]
+W (393991) mesh_main: [#RX:161/507][L:2] parent:34:85:18:01:71:a9, receive from 34:85:18:01:71:a8, size:1460, heap:156184, flag:0[err:0x0, proto:0, tos:0]
+W (394181) wifi:(->sleep)busy, waked:1, dream:0, sleep:0
+W (395501) wifi:(->sleep)busy, waked:1, dream:0, sleep:0
+I (396441) mesh_main: layer:2, rtableSize:1, NODE
+W (396811) mesh_main: [#RX:162/508][L:2] parent:34:85:18:01:71:a9, receive from 34:85:18:01:71:a8, size:1460, heap:156184, flag:0[err:0x0, proto:0, tos:0]
+W (398421) wifi:(->sleep)busy, waked:1, dream:0, sleep:0
+W (399031) wifi:(->sleep)busy, waked:1, dream:0, sleep:0
+W (399311) mesh_main: [#RX:163/509][L:2] parent:34:85:18:01:71:a9, receive from 34:85:18:01:71:a8, size:1460, heap:156184, flag:0[err:0x0, proto:0, tos:0]
+W (401551) wifi:(->sleep)busy, waked:1, dream:0, sleep:0
+W (403281) mesh_main: [#RX:164/510][L:2] parent:34:85:18:01:71:a9, receive from 34:85:18:01:71:a8, size:1460, heap:156184, flag:0[err:0x0, proto:0, tos:0]
+W (406171) mesh_main: [#RX:165/511][L:2] parent:34:85:18:01:71:a9, receive from 34:85:18:01:71:a8, size:1460, heap:156184, flag:0[err:0x0, proto:0, tos:0]
+I (406441) mesh_main: layer:2, rtableSize:1, NODE
+W (408271) wifi:(->sleep)busy, waked:1, dream:0, sleep:0
+W (409221) wifi:(->sleep)busy, waked:1, dream:0, sleep:0
+W (409501) mesh_main: [#RX:166/512][L:2] parent:34:85:18:01:71:a9, receive from 34:85:18:01:71:a8, size:1460, heap:156184, flag:0[err:0x0, proto:0, tos:0]
+W (410081) wifi:(->sleep)busy, waked:1, dream:0, sleep:0
+W (413371) mesh_main: [#RX:167/513][L:2] parent:34:85:18:01:71:a9, receive from 34:85:18:01:71:a8, size:1460, heap:156184, flag:0[err:0x0, proto:0, tos:0]
+W (414051) wifi:(->sleep)busy, waked:1, dream:0, sleep:0
+I (416441) mesh_main: layer:2, rtableSize:1, NODE
+W (416521) mesh_main: [#RX:168/514][L:2] parent:34:85:18:01:71:a9, receive from 34:85:18:01:71:a8, size:1460, heap:156184, flag:0[err:0x0, proto:0, tos:0]
+W (418131) wifi:(->sleep)busy, waked:1, dream:0, sleep:0
+W (418201) wifi:(->sleep)busy, waked:1, dream:0, sleep:0
+W (419161) wifi:(->sleep)busy, waked:1, dream:0, sleep:0
+W (419441) mesh_main: [#RX:169/515][L:2] parent:34:85:18:01:71:a9, receive from 34:85:18:01:71:a8, size:1460, heap:156184, flag:0[err:0x0, proto:0, tos:0]
+W (421351) wifi:(->sleep)busy, waked:1, dream:0, sleep:0
+W (421611) wifi:(->sleep)busy, waked:1, dream:0, sleep:0
+W (421661) mesh_main: [#RX:170/516][L:2] parent:34:85:18:01:71:a9, receive from 34:85:18:01:71:a8, size:1460, heap:156184, flag:0[err:0x0, proto:0, tos:0]
+W (424011) wifi:(->sleep)busy, waked:1, dream:0, sleep:0
+W (424351) mesh_main: [#RX:171/517][L:2] parent:34:85:18:01:71:a9, receive from 34:85:18:01:71:a8, size:1460, heap:156184, flag:0[err:0x0, proto:0, tos:0]
+W (424551) wifi:(->sleep)busy, waked:1, dream:0, sleep:0
+I (426441) mesh_main: layer:2, rtableSize:1, NODE
+W (426861) mesh_main: [#RX:172/518][L:2] parent:34:85:18:01:71:a9, receive from 34:85:18:01:71:a8, size:1460, heap:156184, flag:0[err:0x0, proto:0, tos:0]
+W (428201) wifi:(->sleep)busy, waked:1, dream:0, sleep:0
+W (430071) mesh_main: [#RX:173/519][L:2] parent:34:85:18:01:71:a9, receive from 34:85:18:01:71:a8, size:1460, heap:156184, flag:0[err:0x0, proto:0, tos:0]
+W (431221) wifi:(->sleep)busy, waked:1, dream:0, sleep:0
+W (431521) mesh_main: [#RX:174/520][L:2] parent:34:85:18:01:71:a9, receive from 34:85:18:01:71:a8, size:1460, heap:156184, flag:0[err:0x0, proto:0, tos:0]
+W (432851) wifi:(->sleep)busy, waked:1, dream:0, sleep:0
+W (433421) wifi:(->sleep)busy, waked:1, dream:0, sleep:0
+W (433771) mesh_main: [#RX:175/521][L:2] parent:34:85:18:01:71:a9, receive from 34:85:18:01:71:a8, size:1460, heap:156184, flag:0[err:0x0, proto:0, tos:0]
+W (434531) wifi:(->sleep)busy, waked:1, dream:0, sleep:0
+I (436441) mesh_main: layer:2, rtableSize:1, NODE
+W (437001) mesh_main: [#RX:176/522][L:2] parent:34:85:18:01:71:a9, receive from 34:85:18:01:71:a8, size:1460, heap:156184, flag:0[err:0x0, proto:0, tos:0]
+W (441041) mesh_main: [#RX:177/523][L:2] parent:34:85:18:01:71:a9, receive from 34:85:18:01:71:a8, size:1460, heap:156184, flag:0[err:0x0, proto:0, tos:0]
+W (443451) mesh_main: [#RX:178/524][L:2] parent:34:85:18:01:71:a9, receive from 34:85:18:01:71:a8, size:1460, heap:156184, flag:0[err:0x0, proto:0, tos:0]
+W (444791) wifi:(->sleep)busy, waked:1, dream:0, sleep:0
+W (444921) mesh_main: [#RX:179/525][L:2] parent:34:85:18:01:71:a9, receive from 34:85:18:01:71:a8, size:1460, heap:156184, flag:0[err:0x0, proto:0, tos:0]
+I (446441) mesh_main: layer:2, rtableSize:1, NODE
+W (447141) mesh_main: [#RX:180/526][L:2] parent:34:85:18:01:71:a9, receive from 34:85:18:01:71:a8, size:1460, heap:156184, flag:0[err:0x0, proto:0, tos:0]
+I (447881) mesh: 2004<arm>parent monitor, my layer:2(cap:6)(node), interval:4496ms, retries:1<>
+W (450511) mesh_main: [#RX:181/527][L:2] parent:34:85:18:01:71:a9, receive from 34:85:18:01:71:a8, size:1460, heap:156184, flag:0[err:0x0, proto:0, tos:0]
+W (451181) wifi:(->sleep)busy, waked:1, dream:0, sleep:0
+W (451501) mesh_main: [#RX:182/527][L:2] parent:34:85:18:01:71:a9, receive from 34:85:18:01:71:a8, size:1460, heap:156184, flag:0[err:0x0, proto:0, tos:0]
+I (452491) mesh: 5161<active>parent layer:1(node), channel:7, rssi:-54, assoc:6(cnx rssi threshold:-120)my_assoc:0
+W (453991) wifi:scan number is 0
+I (453991) mesh: [SCAN][ch:7]AP:0, other(ID:0, RD:0), MAP:0, idle:0, candidate:0, root:0, topMAP:0[c:2,i:2][8c:86:dd:44:1a:af]<weak>
+I (453991) mesh: [FAIL][1]root:0, fail:1, normal:0, <pre>backoff:0[weak]
+
+I (454001) mesh: 2004<arm>parent monitor, my layer:2(cap:6)(node), interval:8010ms, retries:2<>
+W (454261) wifi:(->sleep)busy, waked:1, dream:0, sleep:0
+W (454561) mesh_main: [#RX:183/528][L:2] parent:34:85:18:01:71:a9, receive from 34:85:18:01:71:a8, size:1460, heap:156184, flag:0[err:0x0, proto:0, tos:0]
+W (455891) wifi:(->sleep)busy, waked:1, dream:0, sleep:0
+W (456171) mesh_main: [#RX:184/529][L:2] parent:34:85:18:01:71:a9, receive from 34:85:18:01:71:a8, size:1460, heap:156184, flag:0[err:0x0, proto:0, tos:0]
+I (456441) mesh_main: layer:2, rtableSize:1, NODE
+W (460141) mesh_main: [#RX:185/530][L:2] parent:34:85:18:01:71:a9, receive from 34:85:18:01:71:a8, size:1460, heap:156184, flag:0[err:0x0, proto:0, tos:0]
