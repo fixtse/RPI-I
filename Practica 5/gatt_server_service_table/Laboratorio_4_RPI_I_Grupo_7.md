@@ -29,3 +29,20 @@ Modifica el código del ejemplo para cambiar el nombre del dispositivo que se en
 *Cambio de nombre del dispositivo*
 
 </div>
+
+
+<div align="center">
+
+![img2](img/img2.png)
+
+*Escaneo y conexión con el dispositivo*
+
+</div>
+
+<div align="center">
+
+![img3](img/img3.png)
+
+*Respuesta del dispositivo despues de la conexión*
+
+</div>
