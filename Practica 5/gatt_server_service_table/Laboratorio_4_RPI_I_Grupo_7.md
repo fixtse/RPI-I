@@ -110,3 +110,35 @@ Su UUID completo es:
 *Consulta su valor (read) y modificacion (write)*
 
 </div>
+
+### Ejercicio 3
+
+Mediante el comando correspondiente, consulta e identifica manualmente los atributos/características de la tabla GATT de tu dispositivo
+
+Una vez conectado al dispositivo, se ha ejecutado el comando:
+
+list-attributes
+
+Este comando permite visualizar los servicios primarios, las características asociadas y sus descriptores, identificados mediante sus respectivos UUID.
+
+En el resultado obtenido se identifican los siguientes servicios:
+
+-- Generic Attribute (0x1801): servicio que contiene la característica Service Changed (0x2A05).
+
+-- Generic Access (0x1800): contiene las características Device Name (0x2A00), Appearance (0x2A01) y Central Address Resolution (0x2AA6).
+
+-- Servicio personalizado (0x00FF): contiene las características 0xFF01, 0xFF02 y 0xFF03.
+
+Además, se identifica el descriptor Client Characteristic Configuration (CCCD), con UUID 0x2902, utilizado para configurar las notificaciones e indicaciones de las características.
+
+<div align="center">
+
+![img8](img/img8.png)
+
+*Consulta su valor (read) y modificacion (write)*
+
+</div>
+
+### Ejercicio 4
+
+Identifica el UUID de la característica que nos permitirá leer el Heart Rate Measurement Value. ¿Con qué comandos podemos leer su valor? Obtén el valor y documenta el proceso seguido.
