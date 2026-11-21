@@ -58,58 +58,13 @@ Establece la conexión con el servidor GATT y documenta el proceso, incluyendo l
 
 </div>
 
-##### Lista de atributos de GATT
+<div align="center">
 
-[ESTEFANIA]> list-attributes
-Primary Service (Handle 0x0001)
-	/org/bluez/hci0/dev_24_0A_C4_EA_50_92/service0001
-	00001801-0000-1000-8000-00805f9b34fb
-	Generic Attribute Profile
-Characteristic (Handle 0x0002)
-	/org/bluez/hci0/dev_24_0A_C4_EA_50_92/service0001/char0002
-	00002a05-0000-1000-8000-00805f9b34fb
-	Service Changed
-Descriptor (Handle 0x0004)
-	/org/bluez/hci0/dev_24_0A_C4_EA_50_92/service0001/char0002/desc0004
-	00002902-0000-1000-8000-00805f9b34fb
-	Client Characteristic Configuration
-Primary Service (Handle 0x0014)
-	/org/bluez/hci0/dev_24_0A_C4_EA_50_92/service0014
-	00001800-0000-1000-8000-00805f9b34fb
-	Generic Access Profile
-Characteristic (Handle 0x0015)
-	/org/bluez/hci0/dev_24_0A_C4_EA_50_92/service0014/char0015
-	00002a00-0000-1000-8000-00805f9b34fb
-	Device Name
-Characteristic (Handle 0x0017)
-	/org/bluez/hci0/dev_24_0A_C4_EA_50_92/service0014/char0017
-	00002a01-0000-1000-8000-00805f9b34fb
-	Appearance
-Characteristic (Handle 0x0019)
-	/org/bluez/hci0/dev_24_0A_C4_EA_50_92/service0014/char0019
-	00002aa6-0000-1000-8000-00805f9b34fb
-	Central Address Resolution
-Primary Service (Handle 0x0028)
-	/org/bluez/hci0/dev_24_0A_C4_EA_50_92/service0028
-	000000ff-0000-1000-8000-00805f9b34fb
-	Unknown
-Characteristic (Handle 0x0029)
-	/org/bluez/hci0/dev_24_0A_C4_EA_50_92/service0028/char0029
-	0000ff01-0000-1000-8000-00805f9b34fb
-	Unknown
-Descriptor (Handle 0x002b)
-	/org/bluez/hci0/dev_24_0A_C4_EA_50_92/service0028/char0029/desc002b
-	00002902-0000-1000-8000-00805f9b34fb
-	Client Characteristic Configuration
-Characteristic (Handle 0x002c)
-	/org/bluez/hci0/dev_24_0A_C4_EA_50_92/service0028/char002c
-	0000ff02-0000-1000-8000-00805f9b34fb
-	Unknown
-Characteristic (Handle 0x002e)
-	/org/bluez/hci0/dev_24_0A_C4_EA_50_92/service0028/char002e
-	0000ff03-0000-1000-8000-00805f9b34fb
-	Unknown
+![img8](img/img8.png)
 
+*Lista de atributos de GATT*
+
+</div>
 
 ##### Nombre del dispositivo Bluetooth configurado 
 
