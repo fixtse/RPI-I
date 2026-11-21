@@ -96,3 +96,17 @@ Establece la conexión con el servidor GATT y documenta el proceso, incluyendo l
 *Respuesta del monitor esp32*
 
 </div>
+
+La característica FF03 pertenece a un servicio GATT personalizado de tu ESP32.
+
+Su UUID completo es:
+0000ff03-0000-1000-8000-00805f9b34fb
+
+
+  <div align="center">
+
+![img7](img/img7.png)
+
+*Consulta su valor (read) y modificacion (write)*
+
+</div>
