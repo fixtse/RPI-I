@@ -124,18 +124,15 @@ Characteristic (Handle 0x002e)
 
 ##### Modificar las notificaciones
 
-
-[ESP_ESTEFANY:/service0014/char0015]> select-attribute /org/bluez/hci0/dev_24_0A_C4_EA_50_92/service0028/char0029
-[CHG] Device A4:05:FD:57:9C:E8 RSSI: 0xffffffb5 (-75)
-[CHG] Device 74:E9:D8:84:89:2B RSSI: 0xffffffb0 (-80)
-[ESP_ESTEFANY:/service0028/char0029]> notify on
-[CHG] Attribute /org/bluez/hci0/dev_24_0A_C4_EA_50_92/service0028/char0029 Notifying: yes
-Notify started
-[CHG] Attribute /org/bluez/hci0/dev_24_0A_C4_EA_50_92/service0028/char0029 Value:
-  00 01 02 03 04 05 06 07 08 09 0a 0b 0c 0d 0e     ............... 
-[ESP_ESTEFANY:/service0028/char0029]> notify off
-[CHG] Attribute /org/bluez/hci0/dev_24_0A_C4_EA_50_92/service0028/char0029 Notifying: no
-Notify stopped
+	[ESP_ESTEFANY:/service0014/char0015]> select-attribute /org/bluez/hci0/dev_24_0A_C4_EA_50_92/service0028/char0029
+	[ESP_ESTEFANY:/service0028/char0029]> notify on
+	[CHG] Attribute /org/bluez/hci0/dev_24_0A_C4_EA_50_92/service0028/char0029 Notifying: yes
+	Notify started
+	[CHG] Attribute /org/bluez/hci0/dev_24_0A_C4_EA_50_92/service0028/char0029 Value:
+	00 01 02 03 04 05 06 07 08 09 0a 0b 0c 0d 0e     ............... 
+	[ESP_ESTEFANY:/service0028/char0029]> notify off
+	[CHG] Attribute /org/bluez/hci0/dev_24_0A_C4_EA_50_92/service0028/char0029 Notifying: no
+	Notify stopped
 
   <div align="center">
 
