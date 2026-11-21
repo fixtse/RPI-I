@@ -83,8 +83,8 @@ static uint8_t raw_adv_data[] = {
     /* Complete 16-bit Service UUIDs */
     0x03, ESP_BLE_AD_TYPE_16SRV_CMPL, 0xFF, 0x00,
     /* Complete Local Name */
-    0x0F, ESP_BLE_AD_TYPE_NAME_CMPL,
-    'E', 'S', 'P', '_', 'G', 'A', 'T', 'T', 'S', '_', 'D', 'E', 'M', 'O'
+    0x0A, ESP_BLE_AD_TYPE_NAME_CMPL,
+    'E', 'S', 'T', 'E', 'F', 'A', 'N', 'I', 'A'
 };
 
 static uint8_t raw_scan_rsp_data[] = {
