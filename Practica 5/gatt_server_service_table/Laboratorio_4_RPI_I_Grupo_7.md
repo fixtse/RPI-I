@@ -114,11 +114,12 @@ Characteristic (Handle 0x002e)
 ##### Nombre del dispositivo Bluetooth configurado 
 
 	[ESTEFANIA]> select-attribute /org/bluez/hci0/dev_24_0A_C4_EA_50_92/service0014/char0015
-[ESP_ESTEFANY:/service0014/char0015]> read
-Attempting to read /org/bluez/hci0/dev_24_0A_C4_EA_50_92/service0014/char0015
-[CHG] Attribute /org/bluez/hci0/dev_24_0A_C4_EA_50_92/service0014/char0015 Value:
-  45 53 50 5f 45 53 54 45 46 41 4e 59              ESP_ESTEFANY    
-  45 53 50 5f 45 53 54 45 46 41 4e 59              ESP_ESTEFANY 
+	[ESP_ESTEFANY:/service0014/char0015]> read
+	Attempting to read /org/bluez/hci0/dev_24_0A_C4_EA_50_92/service0014/char0015
+	[CHG] Attribute /org/bluez/hci0/dev_24_0A_C4_EA_50_92/service0014/char0015 Value:
+	45 53 50 5f 45 53 54 45 46 41 4e 59              ESP_ESTEFANY    
+	45 53 50 5f 45 53 54 45 46 41 4e 59              ESP_ESTEFANY 
+	
 
 
 ##### Modificar las notificaciones
