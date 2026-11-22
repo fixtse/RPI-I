@@ -135,10 +135,41 @@ Además, se identifica el descriptor Client Characteristic Configuration (CCCD),
 
 ![img8](img/img8.png)
 
-*Consulta su valor (read) y modificacion (write)*
+*Lista de atributos*
 
 </div>
 
 ### Ejercicio 4
 
 Identifica el UUID de la característica que nos permitirá leer el Heart Rate Measurement Value. ¿Con qué comandos podemos leer su valor? Obtén el valor y documenta el proceso seguido.
+<div align="center">
+
+![img9](img/img9.png)
+
+*Identificación de UUID*
+
+</div>
+
+<div align="center">
+
+![img10](img/img10.png)
+
+*Lectura del valor*
+
+</div>
+
+Para realizar la lectura se utilizó la herramienta bluetoothctl de Linux. Primero se activó el Bluetooth y se realizó un escaneo para localizar la ESP32. A continuación, se estableció una conexión con el dispositivo mediante su dirección MAC.
+
+Una vez conectado, se accedió al menú GATT mediante menu gatt y se ejecutó list-attributes para visualizar los servicios y características disponibles. Se identificó la característica Heart Rate Measurement con UUID 0x2A37.
+
+Posteriormente, se seleccionó la característica mediante select-attribute, utilizando su ruta GATT, y se ejecutó el comando read para obtener su valor.
+
+El resultado obtenido fue:
+
+00 48
+
+El primer byte (00) contiene los indicadores de la medición y el segundo byte (48) representa el ritmo cardíaco en hexadecimal. Al convertirlo a decimal se obtiene 72.
+
+Por tanto, el valor leído es 72 pulsaciones por minuto (BPM).
+
+Este valor es fijo y se ha configurado en el código de la ESP32 como dato de demostración, por lo que no procede de un sensor físico.
