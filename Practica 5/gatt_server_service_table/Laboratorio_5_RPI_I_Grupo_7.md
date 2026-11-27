@@ -173,3 +173,127 @@ El primer byte (00) contiene los indicadores de la medición y el segundo byte (
 Por tanto, el valor leído es 72 pulsaciones por minuto (BPM).
 
 Este valor es fijo y se ha configurado en el código de la ESP32 como dato de demostración, por lo que no procede de un sensor físico.
+
+### Ejercicio 5
+
+Cambiamos el valor del variable y una vez que se haya hecho Build, Flash y Monitor, vamos a comprobar el cambio.
+
+<div align="center">
+
+![img11](img/img11.png)
+
+*Cambiar el valor*
+
+</div>
+
+<div align="center">
+
+![img12](img/img12.png)
+
+*Comprobar el cambio*
+
+</div>
+
+### Ejercicio 6
+
+Vamos a intentar a hacer "Write" para el valor de "heart_rate_measurment". Para esto, primero hay que añadir la autorización para poder escribir o cambiar este valor. 
+
+<div align="center">
+
+![img13](img/img13.png)
+
+*añadir el permiso de Write*
+
+</div>
+
+Ahora solo se trata de escribir un nuevo valor usando "bluetoothctl"
+
+<div align="center">
+
+![img14](img/img14.png)
+
+</div>
+
+Vemos que hemos podido cambiar el valor sin problema.
+
+### Ejercicio 7
+
+Para hacer esto, se debe dar el valor 0x0001 al CCCD, que se va traducir al "0x01 0x00" en "little-endian".
+
+Primero creamos una nueva variable global para el estado de la notificación (activo o desactivo), y añadimos su interacción dentro del evento de Write.
+
+<div align="center">
+
+![img15](img/img15.png)
+
+*Implementar la interacción*
+
+</div>
+
+A guardar los cambios y flashearlos, vamos a seleccionar el valor de "heart rate" y activar la notificación. Se puede comprobar esta activación usando un Read para el atributo de CCCD
+
+<div align="center">
+
+![img16](img/img16.png)
+
+*Activar y comprobar la notificación*
+
+</div>
+
+Se ve la activación correcta de la notificación tanto en la interfaz de "bluetoothctl" como en el terminal del dispositivo.
+
+<div align="center">
+
+![img17](img/img17.png)
+
+*El terminal de esp32*
+
+</div>
+
+### Ejercicio 8
+
+A parte de cambiar la variable de "heart_rate_measurement" para que sea cambiable y también crear unas nuevas para ver el estado de la conección, hay que añanir y implementar un "handler" nuevo para hacer el loop principal de enviar este "heart rate" periódicamente.
+
+<div align="center">
+
+![img18](img/img18.png)
+
+*El handler principal*
+
+</div>
+
+Así, podemos enviar y recibir un valor random de "heart rate" cada segundo una vez que activamos la notificación de este valor.
+
+<div align="center">
+
+![img19](img/img19.png)
+
+*Activando la notificación*
+
+</div>
+
+<div align="center">
+
+![img20](img/img20.png)
+
+*El dispositivo enviando mensajes*
+
+</div>
+
+También podemos desactivar esta interacción y el envio de los mensajes cuando queramos.
+
+<div align="center">
+
+![img21](img/img21.png)
+
+*Desactivar la notificación*
+
+</div>
+
+<div align="center">
+
+![img22](img/img22.png)
+
+*El terminal de esp32*
+
+</div>

@@ -59,9 +59,16 @@ static const uint16_t character_client_config_uuid =
 /* 0x00 = formato UINT8
  * 72 = frecuencia cardiaca de demostracion
  */
-static const uint8_t heart_rate_measurement[2] = {
-    0x00, 72
+static uint8_t heart_rate_measurement[2] = {
+    0x00, 85
 };
+
+static volatile bool hr_notifications_enabled = false;
+
+static volatile bool client_connected = false;
+static esp_gatt_if_t current_gatts_if = ESP_GATT_IF_NONE;
+static uint16_t current_conn_id = 0;
+static TaskHandle_t publish_task_handle = NULL;
 
 /* 0x01 = Chest (pecho) */
 static const uint8_t body_sensor_location = 0x01;
@@ -78,6 +85,7 @@ static const uint8_t heart_rate_ccc[2] = {
 
 static const uint8_t char_prop_read_notify =
     ESP_GATT_CHAR_PROP_BIT_READ |
+    ESP_GATT_CHAR_PROP_BIT_WRITE |
     ESP_GATT_CHAR_PROP_BIT_NOTIFY;
 
 static const uint8_t char_prop_read =
@@ -122,7 +130,7 @@ static const esp_gatts_attr_db_t gatt_db[HRS_IDX_NB] = {
     {{ESP_GATT_AUTO_RSP},
      {ESP_UUID_LEN_16,
       (uint8_t *)&HEART_RATE_MEAS_UUID,
-      ESP_GATT_PERM_READ,
+      ESP_GATT_PERM_READ | ESP_GATT_PERM_WRITE,
       sizeof(heart_rate_measurement),
       sizeof(heart_rate_measurement),
       (uint8_t *)heart_rate_measurement}},
@@ -238,6 +246,36 @@ static esp_ble_adv_params_t adv_params = {
 /* -------------------------------------------------------
  * CALLBACKS
  * ------------------------------------------------------- */
+
+static void publish_data_task(void *pvParameters)
+{
+    while (1) {
+        if (client_connected && hr_notifications_enabled) {
+            ESP_LOGI("APP", "Sending data...");
+
+            heart_rate_measurement[1] = (uint8_t)(rand() % 256);
+
+            esp_err_t ret = esp_ble_gatts_send_indicate(
+                current_gatts_if,
+                current_conn_id,
+                heart_rate_handle_table[IDX_HR_MEAS_VAL],
+                sizeof(heart_rate_measurement),
+                heart_rate_measurement,
+                false
+            );
+
+            if (ret != ESP_OK) {
+                ESP_LOGE(
+                    GATTS_TABLE_TAG,
+                    "Error enviando notificacion periodica: %s",
+                    esp_err_to_name(ret)
+                );
+            }
+        }
+
+        vTaskDelay(pdMS_TO_TICKS(1000));
+    }
+}
 
 static void gatts_event_handler(
     esp_gatts_cb_event_t event,
@@ -470,7 +508,7 @@ static void gatts_event_handler(
                         (param->write.value[1] << 8);
 
                     if (ccc_value == 0x0001) {
-
+                        hr_notifications_enabled = true;
                         ESP_LOGI(
                             GATTS_TABLE_TAG,
                             "Notificaciones Heart Rate activadas"
@@ -500,7 +538,7 @@ static void gatts_event_handler(
                         }
 
                     } else if (ccc_value == 0x0000) {
-
+                        hr_notifications_enabled = false;
                         ESP_LOGI(
                             GATTS_TABLE_TAG,
                             "Notificaciones desactivadas"
@@ -542,6 +580,21 @@ static void gatts_event_handler(
                 6
             );
 
+            current_gatts_if = gatts_if;
+            current_conn_id = param->connect.conn_id;
+            client_connected = true;
+
+            if (publish_task_handle == NULL) {
+                xTaskCreate(
+                    &publish_data_task,
+                    "publish_data_task",
+                    4096,
+                    NULL,
+                    5,
+                    &publish_task_handle
+                );
+            }
+
             break;
         }
 
@@ -553,6 +606,9 @@ static void gatts_event_handler(
                 GATTS_TABLE_TAG,
                 "Cliente BLE desconectado"
             );
+
+            client_connected = false;
+            hr_notifications_enabled = false;
 
             ESP_LOGI(
                 GATTS_TABLE_TAG,
