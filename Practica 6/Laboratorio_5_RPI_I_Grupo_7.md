@@ -33,6 +33,8 @@ Por:
 Se añade en el Kconfig.projbuild
 
 
+</div>
+
 <div align="center">
 
 ![img1](img/img1.png)
@@ -41,7 +43,10 @@ Se añade en el Kconfig.projbuild
 
 </div>
 
-div align="center">
+
+</div>
+
+<div align="center">
 
 ![img2](img/img2.png)
 
