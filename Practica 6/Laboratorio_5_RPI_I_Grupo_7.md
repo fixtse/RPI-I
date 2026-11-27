@@ -203,3 +203,84 @@ Al pasar duration = 30, la pila BLE de ESP-IDF inicia un temporizador interno de
 
 2.- Por detención explícita al encontrar el dispositivo:
 Dentro de ESP_GAP_BLE_SCAN_RESULT_EVT, cuando el cliente detecta un anuncio cuyo nombre coincide con "ESP_GATTESTEFY", ejecuta explícitamente esp_ble_gap_stop_scanning(); justo antes de iniciar la conexión GATT (esp_ble_gattc_enh_open).
+
+
+#### Modicar el codigo 
+
+##### Cambio de la duración a 0
+
+```c
+static void esp_gap_cb(esp_gap_ble_cb_event_t event, esp_ble_gap_cb_param_t *param)
+
+{
+
+uint8_t *adv_name = NULL;
+
+uint8_t adv_name_len = 0;
+
+switch (event) {
+
+case ESP_GAP_BLE_SCAN_PARAM_SET_COMPLETE_EVT: {
+
+uint32_t duration = 0;
+
+ESP_LOGI(GATTC_TAG, "Iniciando escaneo indefinido");
+
+esp_ble_gap_start_scanning(duration);
+
+break;
+
+}
+```
+
+##### Marca de tiempo para comprobar la duración real
+
+El escaneo es indefinido hasta encontrar el dispositivo 
+
+
+<div align="center">
+
+![img11](img/img11.png)
+
+*Tiempo total de scaneo*
+
+</div>
+
+### Ejercicio 3
+
+Muestra también por pantalla el valor del RSSI de cada dispositivo BLE detectado.
+
+Dentro del case ESP_GAP_SEARCH_INQ_RES_EVT; se coloca el siguiente codigo para visualizar lo solicitado en el ejercicio:
+
+```c
+ESP_LOGI(GATTC_TAG, "Scan result, device "ESP_BD_ADDR_STR", name len %u", ESP_BD_ADDR_HEX(scan_result->scan_rst.bda), adv_name_len);
+
+ESP_LOG_BUFFER_CHAR(GATTC_TAG, adv_name, adv_name_len);
+
+// Mostrar RSSI de cada dispositivo BLE detectado
+ESP_LOGI(GATTC_TAG, "RSSI: %d dBm", scan_result->scan_rst.rssi);
+```
+
+Este evento se ejecuta cada vez que se detecta un dispositivo BLE. Por tanto, al colocar ahí la instrucción ESP_LOGI(), se mostrará el RSSI de cada dispositivo detectado, no solamente el del servidor GATT al que nos conectamos.
+
+<div align="center">
+
+![img12](img/img12.png)
+
+*RSSI parametro añadido al escaneo*
+
+</div>
+
+### Ejercicio 4
+
+Añade a menuconfig un campo que permita configurar la dirección Bluetooth de un dispositivo conocido. Modifica el código para que únicamente se muestre la información del dispositivo cuya dirección se haya configurado.
+
+Se crea la opcion requerida por el ejercicio en Kconfig 
+
+<div align="center">
+
+![img13](img/img13.png)
+
+*Campo para ingresar la MAC*
+
+</div>
