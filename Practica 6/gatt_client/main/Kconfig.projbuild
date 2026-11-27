@@ -42,4 +42,5 @@ menu "Example Configuration"
         help
             Bluetooth MAC address of the device to detect.
 
+
 endmenu

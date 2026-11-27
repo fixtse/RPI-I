@@ -14,7 +14,6 @@
 * data.
 *
 ****************************************************************************/
-
 #include <stdint.h>
 
 #include <string.h>
@@ -22,11 +21,12 @@
 #include <stdbool.h>
 
 #include <stdio.h>
+#include <stdlib.h>
+#include <inttypes.h>
 
 #include "nvs.h"
 
 #include "nvs_flash.h"
-
 
 #include "esp_bt.h"
 
@@ -69,9 +69,9 @@
 
 static time_t inicio_escaneo = 0;
 
+static bool dispositivo_encontrado = false;
 
-
-static char remote_device_name[ESP_BLE_ADV_NAME_LEN_MAX] = "ESTEFANIA";
+static char remote_device_name[ESP_BLE_ADV_NAME_LEN_MAX] = "ESTEFANIA.";
 
 static bool connect = false;
 
@@ -685,86 +685,89 @@ esp_ble_gap_cb_param_t *scan_result = (esp_ble_gap_cb_param_t *)param;
 
 switch (scan_result->scan_rst.search_evt) {
 
-case ESP_GAP_SEARCH_INQ_RES_EVT:
+case ESP_GAP_SEARCH_INQ_RES_EVT: {
 
-adv_name = esp_ble_resolve_adv_data_by_type(scan_result->scan_rst.ble_adv,
+    // Evitar procesar nuevos resultados si ya encontramos el dispositivo
+    if (dispositivo_encontrado) {
+        break;
+    }
 
-scan_result->scan_rst.adv_data_len + scan_result->scan_rst.scan_rsp_len,
+    // Obtener la MAC configurada en menuconfig
+    unsigned int mac[6];
 
-ESP_BLE_AD_TYPE_NAME_CMPL,
+    if (sscanf(CONFIG_EXAMPLE_DEVICE_BLE_ADDRESS,
+               "%x:%x:%x:%x:%x:%x",
+               &mac[0], &mac[1], &mac[2],
+               &mac[3], &mac[4], &mac[5]) != 6) {
+        ESP_LOGE(GATTC_TAG, "Direccion MAC no valida");
+        break;
+    }
 
-&adv_name_len);
+    // Comparar las direcciones MAC
+    bool match = true;
 
-ESP_LOGI(GATTC_TAG, "Scan result, device "ESP_BD_ADDR_STR", name len %u", ESP_BD_ADDR_HEX(scan_result->scan_rst.bda), adv_name_len);
+    for (int i = 0; i < 6; i++) {
+        if (scan_result->scan_rst.bda[i] != mac[i]) {
+            match = false;
+            break;
+        }
+    }
 
-ESP_LOG_BUFFER_CHAR(GATTC_TAG, adv_name, adv_name_len);
+    // Si no coincide, ignorar el dispositivo
+    if (!match) {
+        break;
+    }
 
-// Mostrar RSSI de cada dispositivo BLE detectado
-ESP_LOGI(GATTC_TAG, "RSSI: %d dBm", scan_result->scan_rst.rssi);
+    // Dispositivo encontrado
+    dispositivo_encontrado = true;
+
+    ESP_LOGI(GATTC_TAG, "DISPOSITIVO ENCONTRADO");
+
+    ESP_LOGI(GATTC_TAG, "Direccion MAC: "ESP_BD_ADDR_STR,
+             ESP_BD_ADDR_HEX(scan_result->scan_rst.bda));
+
+    // Mostrar RSSI
+    ESP_LOGI(GATTC_TAG, "RSSI: %d dBm",
+             scan_result->scan_rst.rssi);
+
+    // Obtener nombre del dispositivo
+    adv_name = esp_ble_resolve_adv_data_by_type(
+        scan_result->scan_rst.ble_adv,
+        scan_result->scan_rst.adv_data_len +
+        scan_result->scan_rst.scan_rsp_len,
+        ESP_BLE_AD_TYPE_NAME_CMPL,
+        &adv_name_len);
+
+    if (adv_name != NULL) {
+        ESP_LOGI(GATTC_TAG, "Nombre del dispositivo:");
+        ESP_LOG_BUFFER_CHAR(GATTC_TAG, adv_name, adv_name_len);
+    }
 
 #if CONFIG_EXAMPLE_DUMP_ADV_DATA_AND_SCAN_RESP
 
-if (scan_result->scan_rst.adv_data_len > 0) {
+    if (scan_result->scan_rst.adv_data_len > 0) {
+        ESP_LOGI(GATTC_TAG, "adv data:");
+        ESP_LOG_BUFFER_HEX(GATTC_TAG,
+                           &scan_result->scan_rst.ble_adv[0],
+                           scan_result->scan_rst.adv_data_len);
+    }
 
-ESP_LOGI(GATTC_TAG, "adv data:");
-
-ESP_LOG_BUFFER_HEX(GATTC_TAG, &scan_result->scan_rst.ble_adv[0], scan_result->scan_rst.adv_data_len);
-
-}
-
-if (scan_result->scan_rst.scan_rsp_len > 0) {
-
-ESP_LOGI(GATTC_TAG, "scan resp:");
-
-ESP_LOG_BUFFER_HEX(GATTC_TAG, &scan_result->scan_rst.ble_adv[scan_result->scan_rst.adv_data_len], scan_result->scan_rst.scan_rsp_len);
-
-}
+    if (scan_result->scan_rst.scan_rsp_len > 0) {
+        ESP_LOGI(GATTC_TAG, "scan resp:");
+        ESP_LOG_BUFFER_HEX(GATTC_TAG,
+                           &scan_result->scan_rst.ble_adv[scan_result->scan_rst.adv_data_len],
+                           scan_result->scan_rst.scan_rsp_len);
+    }
 
 #endif
 
+    // Detener el escaneo al encontrar el dispositivo
+    ESP_LOGI(GATTC_TAG, "Dispositivo localizado. Deteniendo escaneo...");
 
-if (adv_name != NULL) {
+    esp_ble_gap_stop_scanning();
 
-if (strlen(remote_device_name) == adv_name_len && strncmp((char *)adv_name, remote_device_name, adv_name_len) == 0) {
-
-// Note: If there are multiple devices with the same device name, the device may connect to an unintended one.
-
-// It is recommended to change the default device name to ensure it is unique.
-
-ESP_LOGI(GATTC_TAG, "Device found %s", remote_device_name);
-
-if (connect == false) {
-    
-connect = true;
-ESP_LOGI(GATTC_TAG, "Connect to the remote device");
-
-esp_ble_gap_stop_scanning();
-
-esp_ble_gatt_creat_conn_params_t creat_conn_params = {0};
-
-memcpy(&creat_conn_params.remote_bda, scan_result->scan_rst.bda, ESP_BD_ADDR_LEN);
-
-creat_conn_params.remote_addr_type = scan_result->scan_rst.ble_addr_type;
-
-creat_conn_params.own_addr_type = BLE_ADDR_TYPE_PUBLIC;
-
-creat_conn_params.is_direct = true;
-
-creat_conn_params.is_aux = false;
-
-creat_conn_params.phy_mask = 0x0;
-
-esp_ble_gattc_enh_open(gl_profile_tab[PROFILE_A_APP_ID].gattc_if,
-
-&creat_conn_params);
-
+    break;
 }
-
-}
-
-}
-
-break;
 
 case ESP_GAP_SEARCH_INQ_CMPL_EVT:
 
