@@ -31,7 +31,8 @@ Por:
 .scan_window = ESP_BLE_GAP_SCAN_WIN_MS(CONFIG_BLE_SCAN_WINDOW_MS),
 
 Se añade en el Kconfig.projbuild
-despues en el codigo del cliente.c
+
+Después en el código del cliente.c
 
 static esp_ble_scan_params_t ble_scan_params = {
     .scan_type              = BLE_SCAN_TYPE_ACTIVE,
@@ -46,8 +47,7 @@ static esp_ble_scan_params_t ble_scan_params = {
         CONFIG_BLE_SCAN_WINDOW_MS
     ),
 
-    .scan_duplicate = BLE_SCAN_DUPLICATE_DISABLE
-};
+    .scan_duplicate = BLE_SCAN_DUPLICATE_DISABLE };
 
 
 </div>
