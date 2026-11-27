@@ -34,7 +34,7 @@ Se añade en el Kconfig.projbuild
 
 Después en el código del cliente.c
 
-
+```c
 static esp_ble_scan_params_t ble_scan_params = {
 
 .scan_type = BLE_SCAN_TYPE_ACTIVE,
@@ -48,17 +48,13 @@ static esp_ble_scan_params_t ble_scan_params = {
 CONFIG_BLE_SCAN_INTERVAL_MS
 
 ),
-
 .scan_window = ESP_BLE_GAP_SCAN_WIN_MS(
 
 CONFIG_BLE_SCAN_WINDOW_MS
-
 ),
-
 .scan_duplicate = BLE_SCAN_DUPLICATE_DISABLE
-
 };
-
+```
 
 </div>
 
@@ -85,7 +81,7 @@ CONFIG_BLE_SCAN_WINDOW_MS
 
 La diferencia radica en que el intervalo marca cada cuánto tiempo empieza un ciclo de búsqueda, mientras que la ventana define cuánto tiempo pasa la radio realmente encendida escuchando dentro de ese ciclo:
 Intervalo de escaneo (scan_interval): Es el periodo total que transcurre desde que comienza un escaneo en un canal de anuncio (37, 38 o 39) hasta que arranca el siguiente ciclo en el siguiente canal. Determina la frecuencia con la que el cliente inicia la búsqueda.
-Ventana de escaneo (scan_window): Es el tiempo efectivo dentro de cada intervalo durante el cual el receptor Bluetooth permanece activo capturando paquetes de advertising. El resto del intervalo ($\text{scan\_interval} - \text{scan\_window}$), la radio se apaga para ahorrar energía.
+Ventana de escaneo (scan_window): Es el tiempo efectivo dentro de cada intervalo durante el cual el receptor Bluetooth permanece activo capturando paquetes de advertising. 
 
 ### Tabla de pruebas y valores
 
