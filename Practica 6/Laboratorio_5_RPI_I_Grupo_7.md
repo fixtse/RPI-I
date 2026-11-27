@@ -290,7 +290,7 @@ Se crea la opcion requerida por el ejercicio en Kconfig
 
 ![img14](img/img14.png)
 
-*Mac del sipositivo servidor*
+*Mac del dispositivo servidor*
 
 </div>
 
