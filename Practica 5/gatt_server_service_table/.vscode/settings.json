@@ -26,7 +26,6 @@
   "idf.port": "/dev/ttyACM0",
   "idf.currentSetup": "/home/estefany/.espressif/v6.1/esp-idf",
 =======
->>>>>> c5b52e871eb281f7c148774a5bb45ab7ed49b27d
   "idf.customExtraVars": {
     "IDF_TARGET": "esp32c3"
   },
