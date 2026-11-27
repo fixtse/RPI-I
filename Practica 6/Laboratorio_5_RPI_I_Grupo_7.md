@@ -390,7 +390,7 @@ ESP_GAP_SEARCH_INQ_RES_EVT: {
 
 ![img15](img/img15.png)
 
-*Campo para ingresar la MAC*
+*Características del dispositivo con la mac seleccionada*
 
 </div>
 
