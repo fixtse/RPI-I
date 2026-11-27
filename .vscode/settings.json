@@ -1,5 +1,5 @@
 {
-    "idf.currentSetup": "/home/mazd/.espressif/v6.1/esp-idf",
+    "idf.currentSetup": "/home/estefany/.espressif/v6.1/esp-idf",
     "idf.openOcdConfigs": [
         "board/esp32c3-builtin.cfg"
     ],
@@ -13,5 +13,6 @@
       "--compile-commands-dir=/home/mazd/RPI-I/build"
     ],
     "idf.port": "/dev/ttyUSB0",
-    "idf.flashType": "UART"
+    "idf.flashType": "UART",
+    "cmake.sourceDirectory": "/home/estefany/RPI-I/Practica 1/blink"
 }
