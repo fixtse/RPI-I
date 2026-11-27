@@ -41,7 +41,7 @@
 #define EXAMPLE_TEST_COUNT 50
 #endif
 
-static char remote_device_name[ESP_BLE_ADV_NAME_LEN_MAX] = "ESP_GATTS_DEMO";
+static char remote_device_name[ESP_BLE_ADV_NAME_LEN_MAX] = "ESP_GATTESTEFY";
 static bool connect    = false;
 static bool get_server = false;
 static esp_gattc_char_elem_t *char_elem_result   = NULL;
