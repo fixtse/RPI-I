@@ -1,19 +1,3 @@
-/*
- * SPDX-FileCopyrightText: 2021-2025 Espressif Systems (Shanghai) CO LTD
- *
- * SPDX-License-Identifier: Unlicense OR CC0-1.0
- */
-
-
-
-/****************************************************************************
-*
-* This demo showcases BLE GATT client. It can scan BLE devices and connect to one device.
-* Run the gatt_server demo, the client demo will automatically connect to the gatt_server demo.
-* Client demo will enable gatt_server's notify after connection. The two devices will then exchange
-* data.
-*
-****************************************************************************/
 #include <stdint.h>
 
 #include <string.h>
@@ -21,8 +5,6 @@
 #include <stdbool.h>
 
 #include <stdio.h>
-#include <stdlib.h>
-#include <inttypes.h>
 
 #include "nvs.h"
 
@@ -59,6 +41,11 @@
 
 #define INVALID_HANDLE 0
 
+// Rango de RSSI para representar la proximidad mediante puntos.
+#define RSSI_MIN (-100)
+#define RSSI_MAX (-40)
+#define MAX_PUNTOS 10
+
 #if CONFIG_EXAMPLE_INIT_DEINIT_LOOP
 
 #define EXAMPLE_TEST_COUNT 50
@@ -69,7 +56,7 @@
 
 static time_t inicio_escaneo = 0;
 
-static bool dispositivo_encontrado = false;
+
 
 static char remote_device_name[ESP_BLE_ADV_NAME_LEN_MAX] = "ESTEFANIA.";
 
@@ -633,224 +620,165 @@ break;
 
 
 static void esp_gap_cb(esp_gap_ble_cb_event_t event, esp_ble_gap_cb_param_t *param)
-
 {
-
-uint8_t *adv_name = NULL;
-
-uint8_t adv_name_len = 0;
-
-switch (event) {
-
-case ESP_GAP_BLE_SCAN_PARAM_SET_COMPLETE_EVT: {
-
-// The unit of duration is seconds.
-
-// If duration is set to 0, scanning will continue indefinitely
-
-// until esp_ble_gap_stop_scanning is explicitly called.
-
-uint32_t duration = 0;
-inicio_escaneo = time(NULL);
-
-ESP_LOGI(GATTC_TAG, "Inicio del escaneo: %lld",
-         (long long)inicio_escaneo);
-
-esp_ble_gap_start_scanning(duration);
-
-break;
-
-}
-
-case ESP_GAP_BLE_SCAN_START_COMPLETE_EVT:
-
-//scan start complete event to indicate scan start successfully or failed
-
-if (param->scan_start_cmpl.status != ESP_BT_STATUS_SUCCESS) {
-
-ESP_LOGE(GATTC_TAG, "Scanning start failed, status %x", param->scan_start_cmpl.status);
-
-break;
-
-}
-
-ESP_LOGI(GATTC_TAG, "Scanning start successfully");
-
-
-break;
-
-case ESP_GAP_BLE_SCAN_RESULT_EVT: {
-
-esp_ble_gap_cb_param_t *scan_result = (esp_ble_gap_cb_param_t *)param;
-
-switch (scan_result->scan_rst.search_evt) {
-
-case ESP_GAP_SEARCH_INQ_RES_EVT: {
-
-    // Evitar procesar nuevos resultados si ya encontramos el dispositivo
-    if (dispositivo_encontrado) {
+    switch (event) {
+    case ESP_GAP_BLE_SCAN_PARAM_SET_COMPLETE_EVT: {
+        // Duracion 0: el escaneo continua hasta que se detenga explicitamente.
+        uint32_t duration = 0;
+        inicio_escaneo = time(NULL);
+        ESP_LOGI(GATTC_TAG, "Inicio del escaneo: %lld",
+                 (long long)inicio_escaneo);
+        esp_ble_gap_start_scanning(duration);
         break;
     }
 
-    // Obtener la MAC configurada en menuconfig
-    unsigned int mac[6];
-
-    if (sscanf(CONFIG_EXAMPLE_DEVICE_BLE_ADDRESS,
-               "%x:%x:%x:%x:%x:%x",
-               &mac[0], &mac[1], &mac[2],
-               &mac[3], &mac[4], &mac[5]) != 6) {
-        ESP_LOGE(GATTC_TAG, "Direccion MAC no valida");
-        break;
-    }
-
-    // Comparar las direcciones MAC
-    bool match = true;
-
-    for (int i = 0; i < 6; i++) {
-        if (scan_result->scan_rst.bda[i] != mac[i]) {
-            match = false;
+    case ESP_GAP_BLE_SCAN_START_COMPLETE_EVT:
+        if (param->scan_start_cmpl.status != ESP_BT_STATUS_SUCCESS) {
+            ESP_LOGE(GATTC_TAG, "Scanning start failed, status %x",
+                     param->scan_start_cmpl.status);
             break;
         }
-    }
-
-    // Si no coincide, ignorar el dispositivo
-    if (!match) {
+        ESP_LOGI(GATTC_TAG, "Scanning start successfully");
         break;
-    }
 
-    // Dispositivo encontrado
-    dispositivo_encontrado = true;
+    case ESP_GAP_BLE_SCAN_RESULT_EVT: {
+        esp_ble_gap_cb_param_t *scan_result = param;
 
-    ESP_LOGI(GATTC_TAG, "DISPOSITIVO ENCONTRADO");
+        switch (scan_result->scan_rst.search_evt) {
+        case ESP_GAP_SEARCH_INQ_RES_EVT: {
+            // Convertir la MAC configurada en menuconfig a seis bytes.
+            unsigned int mac[6];
+            int campos = sscanf(CONFIG_EXAMPLE_DEVICE_BLE_ADDRESS,
+                                "%2x:%2x:%2x:%2x:%2x:%2x",
+                                &mac[0], &mac[1], &mac[2],
+                                &mac[3], &mac[4], &mac[5]);
 
-    ESP_LOGI(GATTC_TAG, "Direccion MAC: "ESP_BD_ADDR_STR,
-             ESP_BD_ADDR_HEX(scan_result->scan_rst.bda));
+            if (campos != 6 || mac[0] > 0xFF || mac[1] > 0xFF ||
+                mac[2] > 0xFF || mac[3] > 0xFF ||
+                mac[4] > 0xFF || mac[5] > 0xFF) {
+                ESP_LOGE(GATTC_TAG, "MAC no valida en menuconfig: %s",
+                         CONFIG_EXAMPLE_DEVICE_BLE_ADDRESS);
+                break;
+            }
 
-    // Mostrar RSSI
-    ESP_LOGI(GATTC_TAG, "RSSI: %d dBm",
-             scan_result->scan_rst.rssi);
+            bool match = true;
+            for (int i = 0; i < 6; i++) {
+                if (scan_result->scan_rst.bda[i] != (uint8_t)mac[i]) {
+                    match = false;
+                    break;
+                }
+            }
 
-    // Obtener nombre del dispositivo
-    adv_name = esp_ble_resolve_adv_data_by_type(
-        scan_result->scan_rst.ble_adv,
-        scan_result->scan_rst.adv_data_len +
-        scan_result->scan_rst.scan_rsp_len,
-        ESP_BLE_AD_TYPE_NAME_CMPL,
-        &adv_name_len);
+            // Ignorar cualquier dispositivo cuya MAC no sea la configurada.
+            if (!match) {
+                break;
+            }
 
-    if (adv_name != NULL) {
-        ESP_LOGI(GATTC_TAG, "Nombre del dispositivo:");
-        ESP_LOG_BUFFER_CHAR(GATTC_TAG, adv_name, adv_name_len);
-    }
+            // A partir de aqui solo se muestran datos del dispositivo objetivo.
+            int rssi = scan_result->scan_rst.rssi;
+            ESP_LOGI(GATTC_TAG, "DISPOSITIVO OBJETIVO: " ESP_BD_ADDR_STR,
+                     ESP_BD_ADDR_HEX(scan_result->scan_rst.bda));
+            ESP_LOGI(GATTC_TAG, "RSSI: %d dBm", rssi);
+
+            // Limitar RSSI al rango definido y aplicar la formula del ejercicio.
+            int rssi_limitado = rssi;
+            if (rssi_limitado < RSSI_MIN) rssi_limitado = RSSI_MIN;
+            if (rssi_limitado > RSSI_MAX) rssi_limitado = RSSI_MAX;
+
+            float proporcion = (float)(rssi_limitado - RSSI_MIN) /
+                               (float)(RSSI_MAX - RSSI_MIN);
+            int puntos = (int)(proporcion * MAX_PUNTOS + 0.5f);
+
+            char indicador[MAX_PUNTOS + 1];
+            for (int i = 0; i < MAX_PUNTOS; i++) {
+                indicador[i] = (i < puntos) ? '*' : ' ';
+            }
+            indicador[MAX_PUNTOS] = '\0';
+
+            ESP_LOGI(GATTC_TAG, "Proximidad del dispositivo: [%s] (%d/%d)",
+                     indicador, puntos, MAX_PUNTOS);
+
+            // Obtener y mostrar el nombre anunciado, si existe.
+            uint8_t adv_name_len = 0;
+            uint8_t *adv_name = esp_ble_resolve_adv_data_by_type(
+                scan_result->scan_rst.ble_adv,
+                scan_result->scan_rst.adv_data_len + scan_result->scan_rst.scan_rsp_len,
+                ESP_BLE_AD_TYPE_NAME_CMPL,
+                &adv_name_len);
+
+            if (adv_name != NULL && adv_name_len > 0) {
+                ESP_LOGI(GATTC_TAG, "Nombre del dispositivo:");
+                ESP_LOG_BUFFER_CHAR(GATTC_TAG, adv_name, adv_name_len);
+            }
 
 #if CONFIG_EXAMPLE_DUMP_ADV_DATA_AND_SCAN_RESP
-
-    if (scan_result->scan_rst.adv_data_len > 0) {
-        ESP_LOGI(GATTC_TAG, "adv data:");
-        ESP_LOG_BUFFER_HEX(GATTC_TAG,
-                           &scan_result->scan_rst.ble_adv[0],
-                           scan_result->scan_rst.adv_data_len);
-    }
-
-    if (scan_result->scan_rst.scan_rsp_len > 0) {
-        ESP_LOGI(GATTC_TAG, "scan resp:");
-        ESP_LOG_BUFFER_HEX(GATTC_TAG,
-                           &scan_result->scan_rst.ble_adv[scan_result->scan_rst.adv_data_len],
-                           scan_result->scan_rst.scan_rsp_len);
-    }
-
+            if (scan_result->scan_rst.adv_data_len > 0) {
+                ESP_LOGI(GATTC_TAG, "adv data:");
+                ESP_LOG_BUFFER_HEX(GATTC_TAG,
+                                   &scan_result->scan_rst.ble_adv[0],
+                                   scan_result->scan_rst.adv_data_len);
+            }
+            if (scan_result->scan_rst.scan_rsp_len > 0) {
+                ESP_LOGI(GATTC_TAG, "scan resp:");
+                ESP_LOG_BUFFER_HEX(GATTC_TAG,
+                    &scan_result->scan_rst.ble_adv[scan_result->scan_rst.adv_data_len],
+                    scan_result->scan_rst.scan_rsp_len);
+            }
 #endif
+            break;
+        }
 
-    // Detener el escaneo al encontrar el dispositivo
-    ESP_LOGI(GATTC_TAG, "Dispositivo localizado. Deteniendo escaneo...");
+        case ESP_GAP_SEARCH_INQ_CMPL_EVT:
+            break;
 
-    esp_ble_gap_stop_scanning();
-
-    break;
-}
-
-case ESP_GAP_SEARCH_INQ_CMPL_EVT:
-
-break;
-
-default:
-
-break;
-
-}
-
-break;
-
-}
-
-
-case ESP_GAP_BLE_SCAN_STOP_COMPLETE_EVT: {
-
-    if (param->scan_stop_cmpl.status != ESP_BT_STATUS_SUCCESS) {
-        ESP_LOGE(GATTC_TAG, "Scanning stop failed, status %x",
-                 param->scan_stop_cmpl.status);
+        default:
+            break;
+        }
         break;
     }
 
-    time_t fin = time(NULL);
+    case ESP_GAP_BLE_SCAN_STOP_COMPLETE_EVT: {
+        if (param->scan_stop_cmpl.status != ESP_BT_STATUS_SUCCESS) {
+            ESP_LOGE(GATTC_TAG, "Scanning stop failed, status %x",
+                     param->scan_stop_cmpl.status);
+            break;
+        }
+        time_t fin = time(NULL);
+        ESP_LOGI(GATTC_TAG, "Tiempo total de escaneo: %lld segundos",
+                 (long long)(fin - inicio_escaneo));
+        ESP_LOGI(GATTC_TAG, "Scanning stop successfully");
+        break;
+    }
 
+    case ESP_GAP_BLE_ADV_STOP_COMPLETE_EVT:
+        if (param->adv_stop_cmpl.status != ESP_BT_STATUS_SUCCESS) {
+            ESP_LOGE(GATTC_TAG, "Advertising stop failed, status %x",
+                     param->adv_stop_cmpl.status);
+            break;
+        }
+        ESP_LOGI(GATTC_TAG, "Advertising stop successfully");
+        break;
 
-    ESP_LOGI(GATTC_TAG, "Tiempo total de escaneo: %lld segundos",
-             (long long)(fin - inicio_escaneo));
+    case ESP_GAP_BLE_UPDATE_CONN_PARAMS_EVT:
+        ESP_LOGI(GATTC_TAG,
+                 "Connection params update, status %d, conn_int %d, latency %d, timeout %d",
+                 param->update_conn_params.status,
+                 param->update_conn_params.conn_int,
+                 param->update_conn_params.latency,
+                 param->update_conn_params.timeout);
+        break;
 
-    ESP_LOGI(GATTC_TAG, "Scanning stop successfully");
+    case ESP_GAP_BLE_SET_PKT_LENGTH_COMPLETE_EVT:
+        ESP_LOGI(GATTC_TAG, "Packet length update, status %d, rx %d, tx %d",
+                 param->pkt_data_length_cmpl.status,
+                 param->pkt_data_length_cmpl.params.rx_len,
+                 param->pkt_data_length_cmpl.params.tx_len);
+        break;
 
-    break;
+    default:
+        break;
+    }
 }
-
-case ESP_GAP_BLE_ADV_STOP_COMPLETE_EVT:
-
-if (param->adv_stop_cmpl.status != ESP_BT_STATUS_SUCCESS){
-
-ESP_LOGE(GATTC_TAG, "Advertising stop failed, status %x", param->adv_stop_cmpl.status);
-
-break;
-
-}
-
-ESP_LOGI(GATTC_TAG, "Advertising stop successfully");
-
-break;
-
-case ESP_GAP_BLE_UPDATE_CONN_PARAMS_EVT:
-
-ESP_LOGI(GATTC_TAG, "Connection params update, status %d, conn_int %d, latency %d, timeout %d",
-
-param->update_conn_params.status,
-
-param->update_conn_params.conn_int,
-
-param->update_conn_params.latency,
-
-param->update_conn_params.timeout);
-
-break;
-
-case ESP_GAP_BLE_SET_PKT_LENGTH_COMPLETE_EVT:
-
-ESP_LOGI(GATTC_TAG, "Packet length update, status %d, rx %d, tx %d",
-
-param->pkt_data_length_cmpl.status,
-
-param->pkt_data_length_cmpl.params.rx_len,
-
-param->pkt_data_length_cmpl.params.tx_len);
-
-break;
-
-default:
-
-break;
-
-}
-
-}
-
 
 static void esp_gattc_cb(esp_gattc_cb_event_t event, esp_gatt_if_t gattc_if, esp_ble_gattc_cb_param_t *param)
 

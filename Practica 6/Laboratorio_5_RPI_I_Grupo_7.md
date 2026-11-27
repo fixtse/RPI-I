@@ -396,3 +396,62 @@ ESP_GAP_SEARCH_INQ_RES_EVT: {
 
 ### Ejercicio 5
 Modifica el código para que, en función del valor de RSSI obtenido para el dispositivo de interés, el cliente muestre por pantalla un indicador proporcional a la distancia aproximada a dicho dispositivo (por ejemplo, un número concreto de puntos según la distancia). Para ello, establece un valor mínimo y otro máximo de RSSI y aplica la siguiente fórmula: (RSSI - RSSI_MIN) / (RSSI_MAX - RSSI_MIN). Prueba a alejar físicamente los dispositivos entre sí.
+
+Valores mínimo y máximo
+
+```c
+
+#define RSSI_MIN -100
+#define RSSI_MAX -40
+#define MAX_PUNTOS 10
+```
+RSSI	  Indicador
+-40 dBm	  **********
+-55 dBm	  ********
+-70 dBm	  *****
+-85 dBm	  **
+-100 dBm	
+
+Aplicación de la formula en el código
+
+```c
+// Limitar RSSI al rango definido y aplicar la formula del ejercicio.
+            int rssi_limitado = rssi;
+            if (rssi_limitado < RSSI_MIN) rssi_limitado = RSSI_MIN;
+            if (rssi_limitado > RSSI_MAX) rssi_limitado = RSSI_MAX;
+
+            float proporcion = (float)(rssi_limitado - RSSI_MIN) /
+                               (float)(RSSI_MAX - RSSI_MIN);
+            int puntos = (int)(proporcion * MAX_PUNTOS + 0.5f);
+
+            char indicador[MAX_PUNTOS + 1];
+            for (int i = 0; i < MAX_PUNTOS; i++) {
+                indicador[i] = (i < puntos) ? '*' : ' ';
+            }
+            indicador[MAX_PUNTOS] = '\0';
+
+```
+Indicador visual
+
+```c
+
+char indicador[MAX_PUNTOS + 1];
+
+for (int i = 0; i < MAX_PUNTOS; i++) {
+    indicador[i] = (i < puntos) ? '*' : ' ';
+}
+
+indicador[MAX_PUNTOS] = '\0';
+```
+
+
+<div align="center">
+
+![img15](img/img15.png)
+
+*Características del dispositivo con la mac seleccionada*
+
+</div>
+
+### Ejercicio 6
+Conecta el cliente GATT al servidor modificado del último ejercicio de la práctica anterior para recibir notificaciones y mostrarlas por consola.
