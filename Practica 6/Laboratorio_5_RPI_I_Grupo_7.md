@@ -10,42 +10,109 @@ Integrantes:
 
 - Sergio Romero Plasencia
 
-Fecha: 22/11/2026
+Fecha: 29/11/2026
 
-Número de laboratorio: 5
+Número de laboratorio: 6
 
 ## Desarrollo de ejercicios
 
 ### Ejercicio 1
 
-Modifica el código del ejemplo para cambiar el nombre del dispositivo que se enviará en cada anuncio emitido durante la fase de advertising. A continuación, compila y flashea la nueva versión, inicia otra sesión de escaneo y vuelve a localizar tu dispositivo. Anota su dirección Bluetooth.
+Modifica los parámetros de escaneo para que este se realice con menor frecuencia. Añade estos parámetros a través de menuconfig. ¿Qué diferencia hay entre el intervalo de escaneo y la ventana de escaneo? Muestra cómo cambia el comportamiento del escaneo al modificar ambos parámetros.
 
+Se sustituye del ejemplo original:
+
+.scan_interval = ESP_BLE_GAP_SCAN_ITVL_MS(50),
+.scan_window = ESP_BLE_GAP_SCAN_WIN_MS(30),
+
+Por:
+
+.scan_interval = ESP_BLE_GAP_SCAN_ITVL_MS(CONFIG_BLE_SCAN_INTERVAL_MS),
+.scan_window = ESP_BLE_GAP_SCAN_WIN_MS(CONFIG_BLE_SCAN_WINDOW_MS),
+
+Se añade en el Kconfig.projbuild
 
 
 <div align="center">
 
 ![img1](img/img1.png)
 
-*Cambio de nombre del dispositivo*
+*Parámetros para cambio de intervalo de escaneo y ventana de escaneo*
 
 </div>
 
-
-<div align="center">
+div align="center">
 
 ![img2](img/img2.png)
 
-*Escaneo y conexión con el dispositivo*
+*Menuconfig para cambio de parámetros*
 
 </div>
+
+| Configuración | Intervalo (`scan_interval`) | Ventana (`scan_window`) | Ciclo de trabajo (Duty Cycle) | Comportamiento observado |
+| :--- | :--- | :--- | :--- | :--- |
+| **Original (Rápido)** | $50\text{ ms}$ (`80`) | $30\text{ ms}$ (`48`) | $60\%$ | **Detección casi inmediata** (decenas de milisegundos). Alto consumo energético porque la radio pasa más de la mitad del tiempo escuchando. |
+| **Baja frecuencia / Ventana corta** | $1000\text{ ms}$ (`1600`) | $50\text{ ms}$ (`80`) | $5\%$ | **Detección lenta / errática.** El cliente tarda varios segundos en encontrar al ESP32-C3 porque pasa $950\text{ ms}$ "dormido" por cada segundo y puede perder paquetes de anuncio. Consumo muy bajo. |
+| **Baja frecuencia / Ventana amplia** | $1000\text{ ms}$ (`1600`) | $500\text{ ms}$ (`800`) | $50\%$ | **Detección moderada.** Aunque la frecuencia de inicio es baja (1 vez por segundo), al mantener la ventana abierta medio segundo tiene alta probabilidad de capturar el anuncio del servidor en el primer o segundo intento. |
+| **Escaneo Continuo** | $1000\text{ ms}$ (`1600`) | $1000\text{ ms}$ (`1600`) | $100\%$ | **Sin pausas.** La radio escucha el $100\%$ del tiempo, cambiando de canal cada $1000\text{ ms}$. Máximo consumo de batería y máxima probabilidad de detección. |
+
+#### Prueba 1
 
 <div align="center">
 
 ![img3](img/img3.png)
 
-*Respuesta del dispositivo despues de la conexión*
+*Prueba con valores default*
+
+
+#### Prueba 2 menor frecuencia
 
 </div>
+
+<div align="center">
+
+![img5](img/img5.png)
+
+*Respuesta a menor frecuencia*
+
+</div>
+
+</div>
+
+<div align="center">
+
+![img6](img/img6.png)
+
+*Respuesta a menor frecuencia*
+
+</div>
+
+
+En esta prueba el ESP32 pasa menos tiempo escuchando: aproximadamente el 15 %.
+
+#### Prueba de redución de la ventana
+
+</div>
+
+<div align="center">
+
+![img7](img/img7.png)
+
+*Variacion de valores*
+
+</div>
+
+</div>
+
+<div align="center">
+
+![img7](img/img7.png)
+
+*Variacion de valores*
+
+</div>
+
+Ahora el ESP32 escucha solamente durante aproximadamente el 5 % del tiempo.
 
 ### Ejercicio 2
 
