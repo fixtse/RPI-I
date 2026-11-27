@@ -31,6 +31,23 @@ Por:
 .scan_window = ESP_BLE_GAP_SCAN_WIN_MS(CONFIG_BLE_SCAN_WINDOW_MS),
 
 Se añade en el Kconfig.projbuild
+despues en el codigo del cliente.c
+
+static esp_ble_scan_params_t ble_scan_params = {
+    .scan_type              = BLE_SCAN_TYPE_ACTIVE,
+    .own_addr_type          = BLE_ADDR_TYPE_PUBLIC,
+    .scan_filter_policy     = BLE_SCAN_FILTER_ALLOW_ALL,
+
+    .scan_interval = ESP_BLE_GAP_SCAN_ITVL_MS(
+        CONFIG_BLE_SCAN_INTERVAL_MS
+    ),
+
+    .scan_window = ESP_BLE_GAP_SCAN_WIN_MS(
+        CONFIG_BLE_SCAN_WINDOW_MS
+    ),
+
+    .scan_duplicate = BLE_SCAN_DUPLICATE_DISABLE
+};
 
 
 </div>
@@ -54,6 +71,14 @@ Se añade en el Kconfig.projbuild
 
 </div>
 
+¿Qué diferencia hay entre el intervalo de escaneo y la ventana de escaneo?
+
+La diferencia radica en que el intervalo marca cada cuánto tiempo empieza un ciclo de búsqueda, mientras que la ventana define cuánto tiempo pasa la radio realmente encendida escuchando dentro de ese ciclo:
+Intervalo de escaneo (scan_interval): Es el periodo total que transcurre desde que comienza un escaneo en un canal de anuncio (37, 38 o 39) hasta que arranca el siguiente ciclo en el siguiente canal. Determina la frecuencia con la que el cliente inicia la búsqueda.
+Ventana de escaneo (scan_window): Es el tiempo efectivo dentro de cada intervalo durante el cual el receptor Bluetooth permanece activo capturando paquetes de advertising. El resto del intervalo ($\text{scan\_interval} - \text{scan\_window}$), la radio se apaga para ahorrar energía.
+
+### Tabla de pruebas y valores
+
 | Configuración | Intervalo (`scan_interval`) | Ventana (`scan_window`) | Ciclo de trabajo (Duty Cycle) | Comportamiento observado |
 | :--- | :--- | :--- | :--- | :--- |
 | **Original (Rápido)** | $50\text{ ms}$ (`80`) | $30\text{ ms}$ (`48`) | $60\%$ | **Detección casi inmediata** (decenas de milisegundos). Alto consumo energético porque la radio pasa más de la mitad del tiempo escuchando. |
@@ -68,9 +93,18 @@ Se añade en el Kconfig.projbuild
 ![img3](img/img3.png)
 
 *Prueba con valores default*
+</div>
+
+<div align="center">
+
+![img4](img/img4.png)
+
+*Prueba con valores default*
+</div>
 
 
-#### Prueba 2 menor frecuencia
+
+#### Prueba 
 
 </div>
 
