@@ -277,6 +277,7 @@ Añade a menuconfig un campo que permita configurar la dirección Bluetooth de u
 
 Se crea la opcion requerida por el ejercicio en Kconfig 
 
+
 <div align="center">
 
 ![img13](img/img13.png)
@@ -284,3 +285,114 @@ Se crea la opcion requerida por el ejercicio en Kconfig
 *Campo para ingresar la MAC*
 
 </div>
+
+<div align="center">
+
+![img14](img/img14.png)
+
+*Mac del sipositivo servidor*
+
+</div>
+
+
+Código que se cambio en la busqueda
+```c
+
+case 
+
+ESP_GAP_SEARCH_INQ_RES_EVT: {
+
+    // Evitar procesar nuevos resultados si ya encontramos el dispositivo
+    if (dispositivo_encontrado) {
+        break;
+    }
+
+    // Obtener la MAC configurada en menuconfig
+    unsigned int mac[6];
+
+    if (sscanf(CONFIG_EXAMPLE_DEVICE_BLE_ADDRESS,
+               "%x:%x:%x:%x:%x:%x",
+               &mac[0], &mac[1], &mac[2],
+               &mac[3], &mac[4], &mac[5]) != 6) {
+        ESP_LOGE(GATTC_TAG, "Direccion MAC no valida");
+        break;
+    }
+
+    // Comparar las direcciones MAC
+    bool match = true;
+
+    for (int i = 0; i < 6; i++) {
+        if (scan_result->scan_rst.bda[i] != mac[i]) {
+            match = false;
+            break;
+        }
+    }
+
+    // Si no coincide, ignorar el dispositivo
+    if (!match) {
+        break;
+    }
+
+    // Dispositivo encontrado
+    dispositivo_encontrado = true;
+
+    ESP_LOGI(GATTC_TAG, "DISPOSITIVO ENCONTRADO");
+
+    ESP_LOGI(GATTC_TAG, "Direccion MAC: "ESP_BD_ADDR_STR,
+             ESP_BD_ADDR_HEX(scan_result->scan_rst.bda));
+
+    // Mostrar RSSI
+    ESP_LOGI(GATTC_TAG, "RSSI: %d dBm",
+             scan_result->scan_rst.rssi);
+
+    // Obtener nombre del dispositivo
+    adv_name = esp_ble_resolve_adv_data_by_type(
+        scan_result->scan_rst.ble_adv,
+        scan_result->scan_rst.adv_data_len +
+        scan_result->scan_rst.scan_rsp_len,
+        ESP_BLE_AD_TYPE_NAME_CMPL,
+        &adv_name_len);
+
+    if (adv_name != NULL) {
+        ESP_LOGI(GATTC_TAG, "Nombre del dispositivo:");
+        ESP_LOG_BUFFER_CHAR(GATTC_TAG, adv_name, adv_name_len);
+    }
+
+#if CONFIG_EXAMPLE_DUMP_ADV_DATA_AND_SCAN_RESP
+
+    if (scan_result->scan_rst.adv_data_len > 0) {
+        ESP_LOGI(GATTC_TAG, "adv data:");
+        ESP_LOG_BUFFER_HEX(GATTC_TAG,
+                           &scan_result->scan_rst.ble_adv[0],
+                           scan_result->scan_rst.adv_data_len);
+    }
+
+    if (scan_result->scan_rst.scan_rsp_len > 0) {
+        ESP_LOGI(GATTC_TAG, "scan resp:");
+        ESP_LOG_BUFFER_HEX(GATTC_TAG,
+                           &scan_result->scan_rst.ble_adv[scan_result->scan_rst.adv_data_len],
+                           scan_result->scan_rst.scan_rsp_len);
+    }
+
+#endif
+
+    // Detener el escaneo al encontrar el dispositivo
+    ESP_LOGI(GATTC_TAG, "Dispositivo localizado. Deteniendo escaneo...");
+
+    esp_ble_gap_stop_scanning();
+
+    break;
+}
+
+```
+
+<div align="center">
+
+![img15](img/img15.png)
+
+*Campo para ingresar la MAC*
+
+</div>
+
+### Ejercicio 5
+Modifica el código para que, en función del valor de RSSI obtenido para el dispositivo de interés, el cliente muestre por pantalla un indicador proporcional a la distancia aproximada a dicho dispositivo (por ejemplo, un número concreto de puntos según la distancia). Para ello, establece un valor mínimo y otro máximo de RSSI y aplica la siguiente fórmula: (RSSI - RSSI_MIN) / (RSSI_MAX - RSSI_MIN). Prueba a alejar físicamente los dispositivos entre sí.
