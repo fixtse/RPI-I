@@ -34,6 +34,12 @@ menu "Example Configuration"
         range 5 10240
         default 20
         help
-            Tiempo durante el cual el ESP32 escucha dispositivos BLE.           
+            Tiempo durante el cual el ESP32 escucha dispositivos BLE.  
+            
+    config EXAMPLE_DEVICE_BLE_ADDRESS
+        string "MAC ADDRESS del Bluetooth "
+        default "AA:BB:CC:DD:EE:FF"
+        help
+            Bluetooth MAC address of the device to detect.
 
 endmenu

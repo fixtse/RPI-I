@@ -44,6 +44,8 @@
 
 #include "freertos/FreeRTOS.h"
 
+#include <time.h>
+
 
 #define GATTC_TAG "GATTC_DEMO"
 
@@ -64,12 +66,12 @@
 #endif
 
 
-static uint32_t t_inicio_escaneo = 0;
 
-static uint32_t detecciones = 0;
+static time_t inicio_escaneo = 0;
 
 
-static char remote_device_name[ESP_BLE_ADV_NAME_LEN_MAX] = "ESP_GATTESTEFY";
+
+static char remote_device_name[ESP_BLE_ADV_NAME_LEN_MAX] = "ESTEFANIA";
 
 static bool connect = false;
 
@@ -192,28 +194,9 @@ switch (event) {
 
 case ESP_GATTC_REG_EVT:
 
-    ESP_LOGI(GATTC_TAG, "GATT client register, status %d, app_id %d, gattc_if %d",
-             param->reg.status, param->reg.app_id, gattc_if);
+ESP_LOGI(GATTC_TAG, "GATT client register, status %d, app_id %d, gattc_if %d", param->reg.status, param->reg.app_id, gattc_if);
 
-    // Mostrar configuracion de escaneo del menuconfig
-    ESP_LOGI(GATTC_TAG, "========== CONFIGURACION BLE ==========");
-
-    ESP_LOGI(GATTC_TAG, "Intervalo de escaneo: %d ms",
-             CONFIG_BLE_SCAN_INTERVAL_MS);
-
-    ESP_LOGI(GATTC_TAG, "Ventana de escaneo: %d ms",
-             CONFIG_BLE_SCAN_WINDOW_MS);
-
-    ESP_LOGI(GATTC_TAG, "=======================================");
-
-    // Configurar parametros de escaneo
-    esp_err_t scan_ret = esp_ble_gap_set_scan_params(&ble_scan_params);
-
-    if (scan_ret) {
-        ESP_LOGE(GATTC_TAG, "set scan params error, error code = %x", scan_ret);
-    }
-
-    break;
+esp_err_t scan_ret = esp_ble_gap_set_scan_params(&ble_scan_params);
 
 if (scan_ret){
 
@@ -667,7 +650,11 @@ case ESP_GAP_BLE_SCAN_PARAM_SET_COMPLETE_EVT: {
 
 // until esp_ble_gap_stop_scanning is explicitly called.
 
-uint32_t duration = 30;
+uint32_t duration = 0;
+inicio_escaneo = time(NULL);
+
+ESP_LOGI(GATTC_TAG, "Inicio del escaneo: %lld",
+         (long long)inicio_escaneo);
 
 esp_ble_gap_start_scanning(duration);
 
@@ -712,6 +699,8 @@ ESP_LOGI(GATTC_TAG, "Scan result, device "ESP_BD_ADDR_STR", name len %u", ESP_BD
 
 ESP_LOG_BUFFER_CHAR(GATTC_TAG, adv_name, adv_name_len);
 
+// Mostrar RSSI de cada dispositivo BLE detectado
+ESP_LOGI(GATTC_TAG, "RSSI: %d dBm", scan_result->scan_rst.rssi);
 
 #if CONFIG_EXAMPLE_DUMP_ADV_DATA_AND_SCAN_RESP
 
@@ -745,9 +734,8 @@ if (strlen(remote_device_name) == adv_name_len && strncmp((char *)adv_name, remo
 ESP_LOGI(GATTC_TAG, "Device found %s", remote_device_name);
 
 if (connect == false) {
-
+    
 connect = true;
-
 ESP_LOGI(GATTC_TAG, "Connect to the remote device");
 
 esp_ble_gap_stop_scanning();
@@ -793,20 +781,24 @@ break;
 }
 
 
-case ESP_GAP_BLE_SCAN_STOP_COMPLETE_EVT:
+case ESP_GAP_BLE_SCAN_STOP_COMPLETE_EVT: {
 
-if (param->scan_stop_cmpl.status != ESP_BT_STATUS_SUCCESS){
+    if (param->scan_stop_cmpl.status != ESP_BT_STATUS_SUCCESS) {
+        ESP_LOGE(GATTC_TAG, "Scanning stop failed, status %x",
+                 param->scan_stop_cmpl.status);
+        break;
+    }
 
-ESP_LOGE(GATTC_TAG, "Scanning stop failed, status %x", param->scan_stop_cmpl.status);
+    time_t fin = time(NULL);
 
-break;
 
+    ESP_LOGI(GATTC_TAG, "Tiempo total de escaneo: %lld segundos",
+             (long long)(fin - inicio_escaneo));
+
+    ESP_LOGI(GATTC_TAG, "Scanning stop successfully");
+
+    break;
 }
-
-ESP_LOGI(GATTC_TAG, "Scanning stop successfully");
-
-break;
-
 
 case ESP_GAP_BLE_ADV_STOP_COMPLETE_EVT:
 
@@ -1062,4 +1054,6 @@ ESP_LOGE(GATTC_TAG, "set local MTU failed, error code = %x", local_mtu_ret);
 }
 
 
+
 }
+
