@@ -1,4 +1,16 @@
 {
     "cmake.sourceDirectory": "/home/estefany/RPI-I/Practica 6/gatt_server_service_table",
-    "idf.currentSetup": "/home/estefany/.espressif/v6.1/esp-idf"
+    "idf.currentSetup": "/home/estefany/.espressif/v6.1/esp-idf",
+    "idf.port": "/dev/ttyUSB0",
+    "idf.flashType": "UART",
+    "idf.openOcdConfigs": [
+        "board/esp32-wrover-kit-3.3v.cfg"
+    ],
+    "idf.customExtraVars": {},
+    "clangd.path": "/home/estefany/.espressif/tools/esp-clangd/esp-21.1.3_20260408/esp-clangd/bin/clangd",
+    "clangd.arguments": [
+      "--background-index",
+      "--query-driver=**",
+      "--compile-commands-dir=/home/estefany/RPI-I/Practica 6/build"
+    ]
 }

@@ -21,4 +21,18 @@ menu "Example Configuration"
         default n
         help
             This config perform host init deinit loop for CI test. Only for internal used
+
+    config BLE_SCAN_INTERVAL_MS
+        int "Intervalo de escaneo (ms)"
+        range 5 10240
+        default 100
+        help
+            Tiempo entre el inicio de dos intervalos de escaneo.
+
+    config BLE_SCAN_WINDOW_MS
+        int "Ventana de escaneo (ms)"
+        range 5 10240
+        default 20
+        help
+            Tiempo durante el cual el ESP32 escucha dispositivos BLE.        
 endmenu
