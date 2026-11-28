@@ -473,10 +473,10 @@ En la imagen de abajo se observa la conexión del cliente (31293 ms): Un cliente
 
 En la imagen a continuación se puede observar:
 
-* **Detección del servidor objetivo (6901 ms):** Tras 6 segundos de escaneo, el cliente localiza el dispositivo con dirección MAC `60:55:f9:bc:53:ba` y nombre `ESTEFANIA`, registrando una intensidad de señal (RSSI) de `-60 dBm` (`7/10` puntos de proximidad).
-* **Detención del escaneo y conexión GATT (6911–7061 ms):** El cliente detiene el escaneo e inicia la conexión (`Connected, conn_id 0`) con el servidor remoto.
-* **Descubrimiento del servicio y negociación de MTU (7511–7541 ms):** El cliente explora la tabla GATT, encuentra el servicio primario de frecuencia cardíaca (`UUID16: 0x180d`), registra las notificaciones y negocia un tamaño máximo de paquete (MTU) de `500` bytes.
-* **Activación y recepción de notificaciones (7601–10461 ms):** Tras habilitar el descriptor CCCD (`0x0001`), el cliente recibe periódicamente cada segundo las tramas de 2 bytes enviadas por el servidor (`00 48`, `00 ff`, `00 3f`) e interpreta en consola las mediciones de ritmo cardíaco correspondientes (`72 BPM`, `255 BPM`, `63 BPM`).
+* Detección del servidor objetivo (6901 ms):** Tras 6 segundos de escaneo, el cliente localiza el dispositivo con dirección MAC `60:55:f9:bc:53:ba` y nombre `ESTEFANIA`, registrando una intensidad de señal (RSSI) de `-60 dBm` (`7/10` puntos de proximidad).
+* Detención del escaneo y conexión GATT (6911–7061 ms):** El cliente detiene el escaneo e inicia la conexión (`Connected, conn_id 0`) con el servidor remoto.
+* Descubrimiento del servicio y negociación de MTU (7511–7541 ms):** El cliente explora la tabla GATT, encuentra el servicio primario de frecuencia cardíaca (`UUID16: 0x180d`), registra las notificaciones y negocia un tamaño máximo de paquete (MTU) de `500` bytes.
+* Activación y recepción de notificaciones (7601–10461 ms):** Tras habilitar el descriptor CCCD (`0x0001`), el cliente recibe periódicamente cada segundo las tramas de 2 bytes enviadas por el servidor (`00 48`, `00 ff`, `00 3f`) e interpreta en consola las mediciones de ritmo cardíaco correspondientes (`72 BPM`, `255 BPM`, `63 BPM`).
 
 </div>
 
@@ -488,9 +488,9 @@ En la imagen a continuación se puede observar:
 
 En la última imagen se puede visualizar
 
-* **Recepción periódica de notificaciones (6821–14821 ms):** El cliente recibe tramas de 2 bytes cada segundo desde el servidor (`00 b8`, `00 84`, `00 0a`, `00 72`, `00 a2`, `00 2a`, `00 4c`, `00 ae`), decodificando y mostrando por consola las mediciones correspondientes en pulsaciones por minuto (`184 BPM`, `132 BPM`, `10 BPM`, `114 BPM`, `162 BPM`, `42 BPM`, `76 BPM` y `174 BPM`).
-* **Desconexión por tiempo de espera (21711 ms):** Se produce una pérdida de enlace con el servidor `60:55:f9:bc:53:ba` por *Connection Timeout* (`reason 0x08`, habitual cuando se apaga o reinicia el servidor).
-* **Reinicio automático del escaneo (21711–21721 ms):** Al ejecutarse el evento `ESP_GATTC_DISCONNECT_EVT`, el cliente restablece su estado y vuelve a iniciar el escaneo BLE (`Scanning start successfully`) para buscar y reconectarse nuevamente al servidor.
+* Recepción periódica de notificaciones (6821–14821 ms):** El cliente recibe tramas de 2 bytes cada segundo desde el servidor (`00 b8`, `00 84`, `00 0a`, `00 72`, `00 a2`, `00 2a`, `00 4c`, `00 ae`), decodificando y mostrando por consola las mediciones correspondientes en pulsaciones por minuto (`184 BPM`, `132 BPM`, `10 BPM`, `114 BPM`, `162 BPM`, `42 BPM`, `76 BPM` y `174 BPM`).
+* Desconexión por tiempo de espera (21711 ms):** Se produce una pérdida de enlace con el servidor `60:55:f9:bc:53:ba` por *Connection Timeout* (`reason 0x08`, habitual cuando se apaga o reinicia el servidor).
+* Reinicio automático del escaneo (21711–21721 ms):** Al ejecutarse el evento `ESP_GATTC_DISCONNECT_EVT`, el cliente restablece su estado y vuelve a iniciar el escaneo BLE (`Scanning start successfully`) para buscar y reconectarse nuevamente al servidor.
 
 </div>
 
