@@ -253,7 +253,7 @@ static void publish_data_task(void *pvParameters)
         if (client_connected && hr_notifications_enabled) {
             ESP_LOGI("APP", "Sending data...");
 
-            heart_rate_measurement[1] = (uint8_t)(rand() % 256);
+            heart_rate_measurement[1] = 60 + (rand() % 81);
 
             esp_err_t ret = esp_ble_gatts_send_indicate(
                 current_gatts_if,
@@ -507,7 +507,7 @@ static void gatts_event_handler(
                         param->write.value[0] |
                         (param->write.value[1] << 8);
 
-                    if (ccc_value == 0x0001) {
+                    if (ccc_value & 0x0001) {
                         hr_notifications_enabled = true;
                         ESP_LOGI(
                             GATTS_TABLE_TAG,
