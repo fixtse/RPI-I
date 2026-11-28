@@ -268,7 +268,7 @@ Este evento se ejecuta cada vez que se detecta un dispositivo BLE. Por tanto, al
 
 ![img12](img/img12.png)
 
-*RSSI parametro añadido al escaneo*
+*RSSI parámetro añadido al escaneo*
 
 </div>
 
