@@ -243,7 +243,7 @@ El escaneo es indefinido hasta encontrar el dispositivo
 
 ![img11](img/img11.png)
 
-*Tiempo total de scaneo*
+*Tiempo total de escaneo*
 
 </div>
 
@@ -251,7 +251,7 @@ El escaneo es indefinido hasta encontrar el dispositivo
 
 Muestra también por pantalla el valor del RSSI de cada dispositivo BLE detectado.
 
-Dentro del case ESP_GAP_SEARCH_INQ_RES_EVT; se coloca el siguiente codigo para visualizar lo solicitado en el ejercicio:
+Dentro del case ESP_GAP_SEARCH_INQ_RES_EVT; se coloca el siguiente código para visualizar lo solicitado en el ejercicio:
 
 ```c
 ESP_LOGI(GATTC_TAG, "Scan result, device "ESP_BD_ADDR_STR", name len %u", ESP_BD_ADDR_HEX(scan_result->scan_rst.bda), adv_name_len);
