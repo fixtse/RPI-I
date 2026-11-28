@@ -187,6 +187,7 @@ En esta prueba el ESP32 pasa menos tiempo escuchando: aproximadamente el 15 %.
 ¿Por qué llega un momento en el que el escaneo se detiene? Analiza el código y modifícalo para que el proceso de escaneo se realice indefinidamente. Comprueba que el tiempo durante el cual el dispositivo permanece en fase de escaneo corresponde al valor seleccionado.
 
 El escaneo se detiene por dos razones
+
 1.- En la función esp_gap_cb(), dentro del evento ESP_GAP_BLE_SCAN_PARAM_SET_COMPLETE_EVT, define los siguiente:
 
 ```c
