@@ -458,9 +458,9 @@ Conecta el cliente GATT al servidor modificado del último ejercicio de la prác
 
 Ciclo completo de conexión y envío de notificaciones desde el servidor BLE (Heart Rate) hacia un cliente.
 En la imagen de abajo se observa la conexión del cliente (31293 ms): Un cliente BLE se conecta al servidor e imprime su dirección MAC: 24:0a:c4:ea:50:92.
-	--Negociación de MTU (31753 ms): Se establece un tamaño máximo de paquete (MTU) de 500 bytes.
-	--Activación de notificaciones (31813 ms): El cliente realiza una escritura GATT de 2 bytes (01 00, equivalente a 0x0001 en formato little-endian) sobre el descriptor handle=43 (CCCD), lo que habilita el envío de notificaciones en el servicio de frecuencia 	cardíaca (Notificaciones Heart Rate activadas).
-	--Transmisión periódica de datos (32683 ms – 48683 ms): A partir de ese momento, el servidor envía una notificación cada segundo (APP: Sending data...), lo que confirma que la comunicación y suscripción con el cliente funcionan correctamente.
+* ** Negociación de MTU (31753 ms): Se establece un tamaño máximo de paquete (MTU) de 500 bytes.
+* **Activación de notificaciones (31813 ms): El cliente realiza una escritura GATT de 2 bytes (01 00, equivalente a 0x0001 en formato little-endian) sobre el descriptor handle=43 (CCCD), lo que habilita el envío de notificaciones en el servicio de frecuencia 	cardíaca (Notificaciones Heart Rate activadas).
+* **Transmisión periódica de datos (32683 ms – 48683 ms): A partir de ese momento, el servidor envía una notificación cada segundo (APP: Sending data...), lo que confirma que la comunicación y suscripción con el cliente funcionan correctamente.
 
 
 <div align="center">
