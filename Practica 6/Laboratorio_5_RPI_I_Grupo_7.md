@@ -276,7 +276,7 @@ Este evento se ejecuta cada vez que se detecta un dispositivo BLE. Por tanto, al
 
 Añade a menuconfig un campo que permita configurar la dirección Bluetooth de un dispositivo conocido. Modifica el código para que únicamente se muestre la información del dispositivo cuya dirección se haya configurado.
 
-Se crea la opcion requerida por el ejercicio en Kconfig 
+Se crea la opción requerida por el ejercicio en Kconfig 
 
 
 <div align="center">
