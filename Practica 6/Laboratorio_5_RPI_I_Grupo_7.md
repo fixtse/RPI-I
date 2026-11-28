@@ -406,14 +406,15 @@ Valores mínimo y máximo
 #define RSSI_MAX -40
 #define MAX_PUNTOS 10
 ```
-RSSI	  Indicador
--40 dBm	  **********
--55 dBm	  ********
--70 dBm	  *****
--85 dBm	  **
--100 dBm	
+| RSSI (dBm) | Indicador       |
+|-----------|-----------------|
+| -40 dBm   | **********      |
+| -55 dBm   | *******         |
+| -70 dBm   | ****            |
+| -85 dBm   | **              |
+| -100 dBm  |                 |
 
-Aplicación de la formula en el código
+Aplicación de la fórmula en el código
 
 ```c
 // Limitar RSSI al rango definido y aplicar la formula del ejercicio.
@@ -485,7 +486,7 @@ En la imagen a continuación se puede observar:
 
 *Recepción continua de notificaciones*
 
-En la última imagen podemos visualizar
+En la última imagen se puede visualizar
 
 * **Recepción periódica de notificaciones (6821–14821 ms):** El cliente recibe tramas de 2 bytes cada segundo desde el servidor (`00 b8`, `00 84`, `00 0a`, `00 72`, `00 a2`, `00 2a`, `00 4c`, `00 ae`), decodificando y mostrando por consola las mediciones correspondientes en pulsaciones por minuto (`184 BPM`, `132 BPM`, `10 BPM`, `114 BPM`, `162 BPM`, `42 BPM`, `76 BPM` y `174 BPM`).
 * **Desconexión por tiempo de espera (21711 ms):** Se produce una pérdida de enlace con el servidor `60:55:f9:bc:53:ba` por *Connection Timeout* (`reason 0x08`, habitual cuando se apaga o reinicia el servidor).
